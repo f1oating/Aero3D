@@ -1,5 +1,7 @@
 #include "Application.h"
 
+#include "Utils/Log.h"
+
 Application::Application()
 {
 
@@ -12,7 +14,7 @@ Application::~Application()
 
 void Application::Init()
 {
-
+    LogMsg("Application Initialize");
 }
 
 void Application::Run()
@@ -22,5 +24,5 @@ void Application::Run()
 
 void Application::Shutdown()
 {
-
+    LogMsg("Application Shutdown");
 }
