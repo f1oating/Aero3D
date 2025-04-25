@@ -42,6 +42,7 @@ project "Engine"
 		defines
 		{
 			"A3D_PLATFORM_WINDOWS",
+			"A3D_BUILD_DLL"
 		}
 
         postbuildcommands
