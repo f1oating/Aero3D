@@ -9,8 +9,20 @@ project "Engine"
 
 	files
 	{
-		"src/**.h",
-		"src/**.cpp"
+		"src/Core/**.h",
+		"src/Core/**.cpp",
+		"src/Graphics/**.h",
+		"src/Graphics/**.cpp",
+		"src/Input/**.h",
+		"src/Input/**.cpp",
+		"src/Resources/**.h",
+		"src/Resources/**.cpp",
+		"src/Scene/**.h",
+		"src/Scene/**.cpp",
+		"src/Utils/**.h",
+		"src/Utils/**.cpp",
+		"src/Window/**.h",
+		"src/Window/**.cpp",
 	}
 
 	includedirs
@@ -20,6 +32,12 @@ project "Engine"
 
 	filter "system:windows"
 		systemversion "latest"
+
+		files
+		{
+			"src/Platform/Windows/*.h",
+			"src/Platform/Windows/*.cpp"
+		}
 
 		defines
 		{
