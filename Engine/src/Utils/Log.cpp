@@ -6,6 +6,8 @@
 
 #include "Utils/StringManip.h"
 
+namespace aero3d {
+
 inline void PrintTimestamp()
 {
     auto now = std::chrono::system_clock::now();
@@ -15,15 +17,15 @@ inline void PrintTimestamp()
 
 inline void PrintFileInfo(std::string_view path, std::string_view func, int line)
 {
-    std::cout << std::format("{}[{}] ::{}:: Line: ({}): {}",
+    std::cout << std::format("{}[{}] ({}) Line: ({}): {}",
         RED,
         GetPathAfter(path.data(), "src"),
-        func,
+        ExtractClassAndFunctionName(func),
         line,
         RESET);
 }
 
-inline void LogMsg(std::string_view msg)
+void LogMsg(std::string_view msg)
 {
     PrintTimestamp();
     std::cout << std::format("{}{}{}\n",
@@ -32,7 +34,7 @@ inline void LogMsg(std::string_view msg)
         RESET);
 }
 
-inline void LogErr(std::string_view msg,
+void LogErr(std::string_view msg,
     const std::source_location& location)
 {
     PrintTimestamp();
@@ -42,3 +44,16 @@ inline void LogErr(std::string_view msg,
         msg,
         RESET);
 }
+
+void LogErr(std::string_view msg, std::string_view file,
+    std::string_view func, int line)
+{
+    PrintTimestamp();
+    PrintFileInfo(file, func, line);
+    std::cout << std::format("{}{}{}\n",
+        RED,
+        msg,
+        RESET);
+}
+
+} // namespace aero3d

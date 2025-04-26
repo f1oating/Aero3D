@@ -2,7 +2,7 @@
 
 int main()
 {
-    Application app;
+    aero3d::Application app;
     app.Init();
     app.Run();
     app.Shutdown();

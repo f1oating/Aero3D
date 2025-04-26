@@ -5,6 +5,12 @@
 
 #include "Utils/API.h"
 
+namespace aero3d {
+
 extern A3D_API std::string GetPathAfter(std::string_view path, std::string_view after);
+
+extern A3D_API std::string ExtractClassAndFunctionName(std::string_view prettyFunctionName);
+
+} // namespace aero3d
 
 #endif // AERO3D_UTILS_STRINGMANIP_H_

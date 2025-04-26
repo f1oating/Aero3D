@@ -3,6 +3,9 @@
 #include <GLFW/glfw3.h>
 
 #include "Utils/Log.h"
+#include "Utils/Assert.h"
+
+namespace aero3d {
 
 GLFWwindow* s_Window = nullptr;
 
@@ -16,7 +19,7 @@ Window::~Window()
 
 void Window::Init(const char* title, int width, int height, bool fullscreen)
 {
-    LogMsg("Window Initialize");
+    LogMsg("Window Initialize.");
 
     glfwInit();
 
@@ -34,7 +37,7 @@ void Window::Init(const char* title, int width, int height, bool fullscreen)
     s_Window = glfwCreateWindow(fullscreen ? w : width, fullscreen ? h : height, title, fullscreen ? primary : NULL, NULL);
     if (s_Window == NULL) {
         glfwTerminate();
-        // Add assertion
+        Assert("Failed to initialize glfw window.", s_Window);
     }
 
     glfwMakeContextCurrent(s_Window);
@@ -42,7 +45,7 @@ void Window::Init(const char* title, int width, int height, bool fullscreen)
 
 void Window::Shutdown()
 {
-    LogMsg("Window Shutdown");
+    LogMsg("Window Shutdown.");
 
     glfwDestroyWindow(s_Window);
 }
@@ -66,3 +69,5 @@ void* Window::GetHandle()
 {
     return s_Window;
 }
+
+} // namespace aero3d

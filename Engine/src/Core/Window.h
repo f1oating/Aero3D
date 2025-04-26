@@ -3,6 +3,8 @@
 
 #include "Utils/API.h"
 
+namespace aero3d {
+
 class A3D_API Window
 {
 public:
@@ -20,5 +22,7 @@ public:
     void* GetHandle();
 
 };
+
+} // namespace aero3d
 
 #endif // AERO3D_CORE_WINDOW_H_
