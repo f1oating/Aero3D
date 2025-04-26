@@ -15,8 +15,6 @@ project "Engine"
 		"src/Graphics/**.cpp",
 		"src/Input/**.h",
 		"src/Input/**.cpp",
-		"src/Platform/**.h",
-		"src/Platform/**.cpp",
 		"src/Resources/**.h",
 		"src/Resources/**.cpp",
 		"src/Scene/**.h",
@@ -38,6 +36,12 @@ project "Engine"
 
 	filter "system:windows"
 		systemversion "latest"
+
+		files
+		{
+			"src/Platform/Windows/**.h",
+			"src/Platform/Windows/**.cpp",
+		}
 
 		defines
 		{

@@ -1,26 +1,23 @@
 #ifndef AERO3D_CORE_WINDOW_H_
 #define AERO3D_CORE_WINDOW_H_
 
-#include <memory>
-
 #include "Utils/API.h"
 
 class A3D_API Window
 {
 public:
-    virtual ~Window() = default;
+    Window();
+    ~Window();
 
-    virtual void Init(const char* title, int width, int height, bool fullscreen) = 0;
-    virtual void Shutdown() = 0;
+    void Init(const char* title, int width, int height, bool fullscreen);
+    void Shutdown();
 
-    virtual void ProcessMessages() = 0;
-    virtual void SwapBuffer() = 0;
+    void ProcessMessages();
+    void SwapBuffer();
 
-    virtual bool IsClosing() = 0;
+    bool IsClosing();
 
-    virtual void* GetHandle() = 0;
-
-    static std::unique_ptr<Window> Create();
+    void* GetHandle();
 
 };
 

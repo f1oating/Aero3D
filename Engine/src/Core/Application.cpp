@@ -14,22 +14,21 @@ void Application::Init()
 {
     LogMsg("Application Initialize");
 
-    m_Window = Window::Create();
-    m_Window->Init("Aero3D", 800, 600, false);
+    m_Window.Init("Aero3D", 800, 600, false);
 }
 
 void Application::Run()
 {
-    while (!m_Window->IsClosing())
+    while (!m_Window.IsClosing())
     {
-        m_Window->ProcessMessages();
+        m_Window.ProcessMessages();
 
-        m_Window->SwapBuffer();
+        m_Window.SwapBuffer();
     }
 }
 
 void Application::Shutdown()
 {
     LogMsg("Application Shutdown");
-    m_Window->Shutdown();
+    m_Window.Shutdown();
 }

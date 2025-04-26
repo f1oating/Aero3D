@@ -17,7 +17,7 @@ public:
     void Shutdown();
 
 private:
-    std::unique_ptr<Window> m_Window;
+    Window m_Window;
 
 };
 
