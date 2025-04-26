@@ -1,26 +1,39 @@
 #include "Application.h"
 
+#include "Utils/Log.h"
+
+namespace aero3d {
+
 Application::Application()
 {
-
 }
 
 Application::~Application()
 {
-
 }
 
 void Application::Init()
 {
+    LogMsg("Application Initialize.");
 
+    m_Window.Init("Aero3D", 800, 600, false);
 }
 
 void Application::Run()
 {
-    while (true);
+    while (!m_Window.IsClosing())
+    {
+        m_Window.ProcessMessages();
+
+        m_Window.SwapBuffer();
+    }
 }
 
 void Application::Shutdown()
 {
+    LogMsg("Application Shutdown.");
 
+    m_Window.Shutdown();
 }
+
+} // namespace aero3d

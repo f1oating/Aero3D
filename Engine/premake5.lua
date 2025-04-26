@@ -21,13 +21,17 @@ project "Engine"
 		"src/Scene/**.cpp",
 		"src/Utils/**.h",
 		"src/Utils/**.cpp",
-		"src/Window/**.h",
-		"src/Window/**.cpp",
 	}
 
 	includedirs
 	{
-		"src"
+		"src",
+		"%{IncludeDir.glfw}"
+	}
+
+	links
+	{
+		"glfw"
 	}
 
 	filter "system:windows"
@@ -35,8 +39,8 @@ project "Engine"
 
 		files
 		{
-			"src/Platform/Windows/*.h",
-			"src/Platform/Windows/*.cpp"
+			"src/Platform/Windows/**.h",
+			"src/Platform/Windows/**.cpp",
 		}
 
 		defines
