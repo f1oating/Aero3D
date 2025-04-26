@@ -1,10 +1,10 @@
 #include "Utils/StringManip.h"
 
-const char* GetPathAfter(const char* path, const char* after) 
+inline std::string GetPathAfter(std::string_view path, std::string_view after)
 {
-    const char* src_pos = strstr(path, after);
-    if (src_pos == nullptr) {
-        return nullptr;
+    if (auto pos = path.find(after); pos != std::string_view::npos)
+    {
+        return std::string(path.substr(pos + after.length()));
     }
-    return (char*)(src_pos + 4);
+    return std::string(path);
 }

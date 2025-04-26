@@ -1,35 +1,44 @@
 #include "Utils/Log.h"
 
-#include <stdio.h>
-#include <time.h>
+#include <iostream>
+#include <chrono>
+#include <format>
 
 #include "Utils/StringManip.h"
 
 inline void PrintTimestamp()
 {
-    time_t now = time(nullptr);
-    tm* t = localtime(&now);
-    printf("%02d:%02d:%02d: ", t->tm_hour, t->tm_min, t->tm_sec);
+    auto now = std::chrono::system_clock::now();
+    auto now_sec = std::chrono::floor<std::chrono::seconds>(now);
+    std::cout << std::format("{}[{:%H:%M:%S}]: {}", WHITE, now_sec, RESET);
 }
 
-inline void PrintFileInfo(const char* path, const char* func, int line)
+inline void PrintFileInfo(std::string_view path, std::string_view func, int line)
 {
-    printf("[%s] ::%s:: Line: (%d): ", GetPathAfter(path, "src"), func, line);
+    std::cout << std::format("{}[{}] ::{}:: Line: ({}): {}",
+        RED,
+        GetPathAfter(path.data(), "src"),
+        func,
+        line,
+        RESET);
 }
 
-void LogMsg(const char* msg)
+inline void LogMsg(std::string_view msg)
 {
-    printf("%s", GREEN);
     PrintTimestamp();
-    printf("%s\n", msg);
-    printf("%s", RESET);
+    std::cout << std::format("{}{}{}\n",
+        GREEN,
+        msg,
+        RESET);
 }
 
-void LogErr(const char* msg, const std::source_location& location)
+inline void LogErr(std::string_view msg,
+    const std::source_location& location)
 {
-    printf("%s", RED);
     PrintTimestamp();
     PrintFileInfo(location.file_name(), location.function_name(), location.line());
-    printf("%s\n", msg);
-    printf("%s", RESET);
+    std::cout << std::format("{}{}{}\n",
+        RED,
+        msg,
+        RESET);
 }
