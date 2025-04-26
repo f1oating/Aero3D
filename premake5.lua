@@ -11,6 +11,10 @@ workspace "Aero3D"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+include "Dependencies.lua"
+group "Dependencies"
+	include "Dependencies/glfw"
+
 group ""
 
 include "Engine"

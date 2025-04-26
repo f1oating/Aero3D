@@ -15,29 +15,29 @@ project "Engine"
 		"src/Graphics/**.cpp",
 		"src/Input/**.h",
 		"src/Input/**.cpp",
+		"src/Platform/**.h",
+		"src/Platform/**.cpp",
 		"src/Resources/**.h",
 		"src/Resources/**.cpp",
 		"src/Scene/**.h",
 		"src/Scene/**.cpp",
 		"src/Utils/**.h",
 		"src/Utils/**.cpp",
-		"src/Window/**.h",
-		"src/Window/**.cpp",
 	}
 
 	includedirs
 	{
-		"src"
+		"src",
+		"%{IncludeDir.glfw}"
+	}
+
+	links
+	{
+		"glfw"
 	}
 
 	filter "system:windows"
 		systemversion "latest"
-
-		files
-		{
-			"src/Platform/Windows/*.h",
-			"src/Platform/Windows/*.cpp"
-		}
 
 		defines
 		{
