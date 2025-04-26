@@ -150,11 +150,13 @@
     <ClInclude Include="src\Core\Window.h" />
     <ClInclude Include="src\Utils\API.h" />
     <ClInclude Include="src\Utils\Log.h" />
+    <ClInclude Include="src\Utils\StringManip.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp" />
     <ClCompile Include="src\Platform\Windows\Window.cpp" />
     <ClCompile Include="src\Utils\Log.cpp" />
+    <ClCompile Include="src\Utils\StringManip.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dependencies\glfw\glfw.vcxproj">

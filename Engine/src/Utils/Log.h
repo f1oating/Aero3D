@@ -1,6 +1,8 @@
 #ifndef AERO3D_UTILS_LOG_H_
 #define AERO3D_UTILS_LOG_H_
 
+#include <source_location>
+
 #include "Utils/Api.h"
 
 // macros to setup console color
@@ -22,7 +24,7 @@
 #define BOLDCYAN    "\033[1m\033[36m"       /* Bold Cyan */
 #define BOLDWHITE   "\033[1m\033[37m"       /* Bold White */
 
-extern void A3D_API LogMsg(const char* msg);
-extern void A3D_API LogErr(const char* msg);
+extern A3D_API void LogMsg(const char* msg);
+extern A3D_API void LogErr(const char* msg, const std::source_location& location = std::source_location::current());
 
 #endif // AERO3D_UTILS_LOG_H_

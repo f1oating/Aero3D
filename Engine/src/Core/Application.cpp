@@ -30,5 +30,6 @@ void Application::Run()
 void Application::Shutdown()
 {
     LogMsg("Application Shutdown");
+
     m_Window.Shutdown();
 }
