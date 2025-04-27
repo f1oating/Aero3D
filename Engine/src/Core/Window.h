@@ -1,25 +1,22 @@
 #ifndef AERO3D_CORE_WINDOW_H_
 #define AERO3D_CORE_WINDOW_H_
 
-#include "Utils/API.h"
+#include "SDL3/SDL.h"
 
 namespace aero3d {
 
-class A3D_API Window
+class Window
 {
 public:
-    Window();
-    ~Window();
+    static void Init(const char* title, int width, int height);
+    static void Shutdown();
 
-    void Init(const char* title, int width, int height, bool fullscreen);
-    void Shutdown();
+    static void PollEvents(bool& running);
 
-    void ProcessMessages();
-    void SwapBuffer();
+    static SDL_Window* GetSDLWindow();
 
-    bool IsClosing();
-
-    void* GetHandle();
+private:
+    static SDL_Window* s_Window;
 
 };
 

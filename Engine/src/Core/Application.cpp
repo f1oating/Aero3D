@@ -1,6 +1,7 @@
 #include "Application.h"
 
 #include "Utils/Log.h"
+#include "Core/Window.h"
 
 namespace aero3d {
 
@@ -16,16 +17,16 @@ void Application::Init()
 {
     LogMsg("Application Initialize.");
 
-    m_Window.Init("Aero3D", 800, 600, false);
+    Window::Init("Aero3D", 800, 600);
+
+    m_IsRunning = true;
 }
 
 void Application::Run()
 {
-    while (!m_Window.IsClosing())
+    while (m_IsRunning)
     {
-        m_Window.ProcessMessages();
-
-        m_Window.SwapBuffer();
+        Window::PollEvents(m_IsRunning);
     }
 }
 
@@ -33,7 +34,7 @@ void Application::Shutdown()
 {
     LogMsg("Application Shutdown.");
 
-    m_Window.Shutdown();
+    Window::Shutdown();
 }
 
 } // namespace aero3d

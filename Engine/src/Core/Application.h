@@ -4,7 +4,6 @@
 #include <memory>
 
 #include "Utils/API.h"
-#include "Core/Window.h"
 
 namespace aero3d {
 
@@ -19,8 +18,7 @@ public:
     void Shutdown();
 
 private:
-    Window m_Window;
-
+    bool m_IsRunning = false;
 };
 
 } // namespace aero3d
