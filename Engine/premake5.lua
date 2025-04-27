@@ -26,12 +26,14 @@ project "Engine"
 	includedirs
 	{
 		"src",
-		"%{IncludeDir.sdl}"
+		"%{IncludeDir.sdl}",
+		"%{IncludeDir.glad}"
 	}
 
 	links
 	{
-		"%{WindowsLibrary.sdl}"
+		"%{WindowsLibrary.sdl}",
+		"%{WindowsLibrary.glad}"
 	}
 
 	filter "system:windows"
