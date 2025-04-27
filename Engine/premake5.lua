@@ -26,12 +26,12 @@ project "Engine"
 	includedirs
 	{
 		"src",
-		"%{IncludeDir.glfw}"
+		"%{IncludeDir.sdl}"
 	}
 
 	links
 	{
-		"glfw"
+		"%{WindowsLibrary.sdl}"
 	}
 
 	filter "system:windows"
