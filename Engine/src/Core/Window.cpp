@@ -12,7 +12,7 @@ bool Window::Init(const char* title, int width, int height)
     LogMsg("Window Initialize.");
 
     if (!SDL_InitSubSystem(SDL_INIT_VIDEO)) {
-        LogErr(ERROR_INFO, "SDL Init Failed");
+        LogErr(ERROR_INFO, "SDL Init Failed. SDL Error: %s", SDL_GetError());
         return false;
     }
 
@@ -27,7 +27,7 @@ bool Window::Init(const char* title, int width, int height)
         SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
 
     if (!s_Window) {
-        LogErr(ERROR_INFO, "SDL Create Window Failed");
+        LogErr(ERROR_INFO, "SDL Create Window Failed. SDL Error: %s", SDL_GetError());
         return false;
     }
 

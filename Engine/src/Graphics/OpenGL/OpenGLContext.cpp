@@ -22,7 +22,7 @@ bool OpenGLContext::Init(SDL_Window* window)
     }
 
     if (!gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress)) {
-        LogErr(ERROR_INFO, "Glad func loading creation failed. SDL Error: %s", SDL_GetError());
+        LogErr(ERROR_INFO, "Glad func loading failed");
         return false;
     }
 

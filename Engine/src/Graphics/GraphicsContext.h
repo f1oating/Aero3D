@@ -1,15 +1,11 @@
 #ifndef AERO3D_GRAPHICS_GRAPHICSCONTEXT_H_
 #define AERO3D_GRAPHICS_GRAPHICSCONTEXT_H_
 
-#include <memory>
-
 #include "SDL3/SDL.h"
-
-#include "Utils/API.h"
 
 namespace aero3d {
 
-class A3D_API GraphicsContext
+class GraphicsContext
 {
 public:
     virtual ~GraphicsContext() = default;
