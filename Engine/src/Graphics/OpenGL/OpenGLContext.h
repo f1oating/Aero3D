@@ -12,10 +12,10 @@ class OpenGLContext : public GraphicsContext
 public:
     OpenGLContext();
 
-    virtual void Init() override;
+    virtual bool Init(SDL_Window* window) override;
     virtual void Shutdown() override;
 
-    virtual void SwapBuffers() override;
+    virtual void SwapBuffers(SDL_Window* window) override;
 
 private:
     SDL_GLContext m_Context;

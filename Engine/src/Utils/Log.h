@@ -1,9 +1,6 @@
 #ifndef AERO3D_UTILS_LOG_H_
 #define AERO3D_UTILS_LOG_H_
 
-#include <source_location>
-#include <string_view>
-
 #include "Utils/Api.h"
 
 // macros to setup console color
@@ -25,14 +22,14 @@
 #define BOLDCYAN    "\033[1m\033[36m"       /* Bold Cyan */
 #define BOLDWHITE   "\033[1m\033[37m"       /* Bold White */
 
+#define ERROR_INFO __FILE__, __FUNCTION__, __LINE__
+
 namespace aero3d {
 
-extern A3D_API void LogMsg(std::string_view msg);
+extern A3D_API void LogMsg(const char* fmt, ...);
 
-extern A3D_API void LogErr(std::string_view msg, 
-    const std::source_location& location = std::source_location::current());
-extern A3D_API void LogErr(std::string_view msg, 
-    std::string_view file, std::string_view func, int line);
+extern A3D_API void LogErr(const char* file, const char* func, int line,
+    const char* fmt, ...);
 
 } // namespace aero3d
 

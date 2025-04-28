@@ -7,7 +7,7 @@ namespace aero3d {
 void Assert(std::string_view msg, bool expression,
     const std::source_location& location)
 {
-    if (!expression) LogErr(msg, location); std::abort();
+    if (!expression) LogErr(location.file_name(), location.function_name(), location.line(), msg.data()); std::abort();
 }
 
 } // namespace aero3d

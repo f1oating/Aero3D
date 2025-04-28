@@ -2,7 +2,6 @@
 
 #include <glad/glad.h>
 
-#include "Core/Window.h"
 #include "Utils/Log.h"
 
 namespace aero3d {
@@ -12,32 +11,41 @@ OpenGLContext::OpenGLContext()
 {
 }
 
-void OpenGLContext::Init()
+bool OpenGLContext::Init(SDL_Window* window)
 {
-    m_Context = SDL_GL_CreateContext(Window::GetSDLWindow());
+    LogMsg("OpenGL Graphics Context Initialize.");
+
+    m_Context = SDL_GL_CreateContext(window);
     if (!m_Context) {
-        LogMsg("OpenGL context creation failed.");
+        LogErr(ERROR_INFO, "OpenGL context creation failed. SDL Error: %s", SDL_GetError());
+        return false;
     }
 
     if (!gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress)) {
-        LogMsg("Glad func loading creation failed.");
+        LogErr(ERROR_INFO, "Glad func loading creation failed. SDL Error: %s", SDL_GetError());
+        return false;
     }
 
-    // Перевірка версії OpenGL
-    SDL_Log("OpenGL %d.%d", GLVersion.major, GLVersion.minor);
-    SDL_Log("Версія: %s", glGetString(GL_VERSION));
-    SDL_Log("Вендор: %s", glGetString(GL_VENDOR));
-    SDL_Log("Рендерер: %s", glGetString(GL_RENDERER));
+    LogMsg("OpenGL %d.%d:", GLVersion.major, GLVersion.minor);
+    LogMsg("\tVersion: %s", glGetString(GL_VERSION));
+    LogMsg("\tVendor: %s", glGetString(GL_VENDOR));
+    LogMsg("\tRenderer: %s", glGetString(GL_RENDERER));
+
+    return true;
 }
 
 void OpenGLContext::Shutdown()
 {
-    SDL_GL_DestroyContext(m_Context);
+    LogMsg("OpenGL Graphics Context Shutdown.");
+    if (m_Context)
+    {
+        SDL_GL_DestroyContext(m_Context);
+    }
 }
 
-void OpenGLContext::SwapBuffers()
+void OpenGLContext::SwapBuffers(SDL_Window* window)
 {
-    SDL_GL_SwapWindow(Window::GetSDLWindow());
+    SDL_GL_SwapWindow(window);
 }
 
 } // namespace aero3d

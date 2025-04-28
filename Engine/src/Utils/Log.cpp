@@ -1,59 +1,67 @@
 #include "Utils/Log.h"
 
-#include <iostream>
-#include <chrono>
-#include <format>
+#include <stdio.h>
+#include <time.h>
+#include <stdarg.h>
 
 #include "Utils/StringManip.h"
+
+#ifdef A3D_PLATFORM_WINDOWS
+    #define A3D_LOCALTIME(a, b) localtime_s(b, a)
+#else
+    #define A3D_LOCALTIME(a, b) localtime_r(a, b)
+#endif
 
 namespace aero3d {
 
 inline void PrintTimestamp()
 {
-    auto now = std::chrono::system_clock::now();
-    auto now_sec = std::chrono::floor<std::chrono::seconds>(now);
-    std::cout << std::format("{}[{:%H:%M:%S}]: {}", WHITE, now_sec, RESET);
+    time_t now = time(NULL);
+    tm localTime;
+
+    A3D_LOCALTIME(&now, &localTime);
+
+    printf("%s[%02d:%02d:%02d]: %s",
+        WHITE,
+        localTime.tm_hour,
+        localTime.tm_min,
+        localTime.tm_sec,
+        RESET
+    );
 }
 
-inline void PrintFileInfo(std::string_view path, std::string_view func, int line)
+inline void PrintFileInfo(const char* path, const char* func, int line)
 {
-    std::cout << std::format("{}[{}] ({}) Line: ({}): {}",
+    printf("%s[%s] (%s) Line: (%d): %s",
         RED,
-        GetPathAfter(path.data(), "src"),
+        GetPathAfter(path, "src"),
         ExtractClassAndFunctionName(func),
         line,
         RESET);
 }
 
-void LogMsg(std::string_view msg)
+void LogMsg(const char* fmt, ...)
 {
     PrintTimestamp();
-    std::cout << std::format("{}{}{}\n",
-        GREEN,
-        msg,
-        RESET);
+    char buffer[1024];
+    va_list args;
+    va_start(args, fmt);
+    vsnprintf(buffer, sizeof(buffer), fmt, args);
+    va_end(args);
+    printf("%s %s %s\n", GREEN, buffer, RESET);
 }
 
-void LogErr(std::string_view msg,
-    const std::source_location& location)
-{
-    PrintTimestamp();
-    PrintFileInfo(location.file_name(), location.function_name(), location.line());
-    std::cout << std::format("{}{}{}\n",
-        RED,
-        msg,
-        RESET);
-}
-
-void LogErr(std::string_view msg, std::string_view file,
-    std::string_view func, int line)
+void LogErr(const char* file, const char* func, int line, 
+    const char* fmt, ...)
 {
     PrintTimestamp();
     PrintFileInfo(file, func, line);
-    std::cout << std::format("{}{}{}\n",
-        RED,
-        msg,
-        RESET);
+    char buffer[1024];
+    va_list args;
+    va_start(args, fmt);
+    vsnprintf(buffer, sizeof(buffer), fmt, args);
+    va_end(args);
+    printf("%s %s %s\n", RED, buffer, RESET);
 }
 
 } // namespace aero3d

@@ -4,7 +4,6 @@
 #include <memory>
 
 #include "Utils/API.h"
-#include "Graphics/GraphicsContext.h"
 
 namespace aero3d {
 
@@ -14,13 +13,12 @@ public:
     Application();
     ~Application();
 
-    void Init();
+    bool Init();
     void Run();
     void Shutdown();
 
 private:
     bool m_IsRunning;
-    std::shared_ptr<GraphicsContext> m_Context;
 
 };
 

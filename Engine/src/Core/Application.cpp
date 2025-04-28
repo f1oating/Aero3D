@@ -6,7 +6,7 @@
 namespace aero3d {
 
 Application::Application()
-    : m_IsRunning(false), m_Context(nullptr)
+    : m_IsRunning(false)
 {
 }
 
@@ -14,15 +14,18 @@ Application::~Application()
 {
 }
 
-void Application::Init()
+bool Application::Init()
 {
     LogMsg("Application Initialize.");
 
-    Window::Init("Aero3D", 800, 600);
-    m_Context = GraphicsContext::Create();
-    m_Context->Init();
+    if (!Window::Init("Aero3D", 800, 600))
+    {
+        return false;
+    }
 
     m_IsRunning = true;
+
+    return true;
 }
 
 void Application::Run()
@@ -30,7 +33,8 @@ void Application::Run()
     while (m_IsRunning)
     {
         Window::PollEvents(m_IsRunning);
-        m_Context->SwapBuffers();
+
+        Window::SwapBuffers();
     }
 }
 
@@ -38,7 +42,6 @@ void Application::Shutdown()
 {
     LogMsg("Application Shutdown.");
 
-    m_Context->Shutdown();
     Window::Shutdown();
 }
 

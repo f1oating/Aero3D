@@ -3,6 +3,8 @@
 
 #include <memory>
 
+#include "SDL3/SDL.h"
+
 #include "Utils/API.h"
 
 namespace aero3d {
@@ -12,12 +14,12 @@ class A3D_API GraphicsContext
 public:
     virtual ~GraphicsContext() = default;
 
-    virtual void Init() = 0;
+    virtual bool Init(SDL_Window* window) = 0;
     virtual void Shutdown() = 0;
 
-    virtual void SwapBuffers() = 0;
+    virtual void SwapBuffers(SDL_Window* window) = 0;
 
-    static std::shared_ptr<GraphicsContext> Create();
+    static GraphicsContext* Create();
 };
 
 } // namespace aero3d

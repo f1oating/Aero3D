@@ -7,9 +7,9 @@
 
 namespace aero3d {
 
-extern A3D_API std::string GetPathAfter(std::string_view path, std::string_view after);
+extern A3D_API const char* GetPathAfter(const char* path, const char* after);
 
-extern A3D_API std::string ExtractClassAndFunctionName(std::string_view prettyFunctionName);
+extern A3D_API const char* ExtractClassAndFunctionName(const char* prettyFunctionName);
 
 } // namespace aero3d
 

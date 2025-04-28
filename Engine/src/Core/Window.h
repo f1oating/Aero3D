@@ -3,20 +3,24 @@
 
 #include "SDL3/SDL.h"
 
+#include "Graphics/GraphicsContext.h"
+
 namespace aero3d {
 
 class Window
 {
 public:
-    static void Init(const char* title, int width, int height);
+    static bool Init(const char* title, int width, int height);
     static void Shutdown();
 
     static void PollEvents(bool& running);
+    static void SwapBuffers();
 
     static SDL_Window* GetSDLWindow();
 
 private:
     static SDL_Window* s_Window;
+    static GraphicsContext* s_Context;
 
 };
 

@@ -4,9 +4,9 @@
 
 namespace aero3d {
 
-std::shared_ptr<GraphicsContext> GraphicsContext::Create()
+GraphicsContext* GraphicsContext::Create()
 {
-    return std::make_shared<OpenGLContext>();
+    return new OpenGLContext();
 }
 
 } // namespace aero3d
