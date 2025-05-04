@@ -96,10 +96,12 @@ public:
     virtual void Bind() = 0;
     virtual void Unbind() = 0;
 
+    virtual size_t GetIndexCount() = 0;
+
     void SetIndexBufferType(IndexBufferType type) { m_Type = type; }
     IndexBufferType GetIndexBufferType() { return m_Type; }
 
-private:
+protected:
     IndexBufferType m_Type;
 
 };

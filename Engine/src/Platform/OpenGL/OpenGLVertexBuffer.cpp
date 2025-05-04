@@ -27,6 +27,7 @@ static GLenum ToGLType(ElementType type)
 }
 
 OpenGLVertexBuffer::OpenGLVertexBuffer(BufferLayout& layout, const void* data, size_t size)
+    : m_VBO(0), m_VAO(0)
 {
     glGenVertexArrays(1, &m_VAO);
     glBindVertexArray(m_VAO);
