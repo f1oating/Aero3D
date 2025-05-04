@@ -1,6 +1,8 @@
 #ifndef AERO3D_CORE_WINDOW_H_
 #define AERO3D_CORE_WINDOW_H_
 
+#include <memory>
+
 #include "SDL3/SDL.h"
 
 #include "Graphics/GraphicsContext.h"
@@ -20,7 +22,7 @@ public:
 
 private:
     static SDL_Window* s_Window;
-    static GraphicsContext* s_Context;
+    static std::unique_ptr<GraphicsContext> s_Context;
 
 };
 

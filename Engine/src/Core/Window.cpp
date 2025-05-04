@@ -5,7 +5,7 @@
 namespace aero3d {
 
 SDL_Window* Window::s_Window = nullptr;
-GraphicsContext* Window::s_Context = nullptr;
+std::unique_ptr<GraphicsContext> Window::s_Context = nullptr;
 
 bool Window::Init(const char* title, int width, int height)
 {

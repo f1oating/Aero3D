@@ -1,6 +1,8 @@
 #ifndef AERO3D_GRAPHICS_GRAPHICSCONTEXT_H_
 #define AERO3D_GRAPHICS_GRAPHICSCONTEXT_H_
 
+#include <memory>
+
 #include "SDL3/SDL.h"
 
 namespace aero3d {
@@ -15,7 +17,7 @@ public:
 
     virtual void SwapBuffers(SDL_Window* window) = 0;
 
-    static GraphicsContext* Create();
+    static std::unique_ptr<GraphicsContext> Create();
 };
 
 } // namespace aero3d

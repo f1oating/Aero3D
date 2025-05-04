@@ -153,6 +153,8 @@
     <ClInclude Include="src\Core\Window.h" />
     <ClInclude Include="src\Graphics\Buffer.h" />
     <ClInclude Include="src\Graphics\GraphicsContext.h" />
+    <ClInclude Include="src\Graphics\RenderAPI.h" />
+    <ClInclude Include="src\Graphics\RenderCommand.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLIndexBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexBuffer.h" />
