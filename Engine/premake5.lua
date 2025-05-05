@@ -39,6 +39,12 @@ project "Engine"
 	filter "system:windows"
 		systemversion "latest"
 
+		files
+		{
+			"src/Platform/Windows/**.h",
+			"src/Platform/Windows/**.cpp",
+		}
+
 		defines
 		{
 			"A3D_PLATFORM_WINDOWS",
