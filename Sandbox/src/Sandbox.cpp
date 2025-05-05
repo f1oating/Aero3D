@@ -3,8 +3,12 @@
 int main()
 {
     aero3d::Application app;
-    app.Init();
-    app.Run();
+    if (app.Init())
+    {
+        app.Run();
+    }
+
     app.Shutdown();
+    
     return 0;
 }

@@ -1,0 +1,45 @@
+#ifndef AERO3D_GRAPHICS_RENDERAPI_H_
+#define AERO3D_GRAPHICS_RENDERAPI_H_
+
+#include <memory>
+
+#include "Graphics/Buffer.h"
+
+namespace aero3d {
+
+enum class API
+{
+    None,
+    OpenGL,
+    Vulkan,
+    DirectX11,
+    DirectX12
+};
+
+class RenderAPI
+{
+public:
+    RenderAPI() : m_API(API::None) {}
+    virtual ~RenderAPI() = default;
+
+    virtual bool Init() = 0;
+    virtual void Shutdown() = 0;
+
+    virtual void SetViewport(int x, int y, int width, int height) = 0;
+
+    virtual void SetClearColor(float r, float g, float b, float a) = 0;
+    virtual void Clear() = 0;
+
+    virtual void Draw(std::shared_ptr<VertexBuffer> vb, size_t count) = 0;
+    virtual void DrawIndexed(std::shared_ptr<VertexBuffer> vb, std::shared_ptr<IndexBuffer> ib) = 0;
+
+    API GetAPI() { return m_API; }
+
+protected:
+    API m_API;
+
+};
+
+} // namespace aero3d
+
+#endif // AERO3D_GRAPHICS_RENDERAPI_H_

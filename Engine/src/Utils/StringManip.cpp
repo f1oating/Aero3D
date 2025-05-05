@@ -1,31 +1,51 @@
 #include "Utils/StringManip.h"
 
+#include <string.h>
+
 namespace aero3d {
 
-std::string GetPathAfter(std::string_view path, std::string_view after)
+const char* GetPathAfter(const char* path, const char* after)
 {
-    if (auto pos = path.find(after); pos != std::string_view::npos)
+    const char* found = strstr(path, after);
+    if (found != NULL)
     {
-        return std::string(path.substr(pos + after.length()));
+        return found + strlen(after);
     }
-    return std::string(path);
+    return path;
 }
 
-std::string ExtractClassAndFunctionName(std::string_view prettyFunctionName)
+const char* ExtractClassAndFunctionName(const char* prettyFunctionName)
 {
-    size_t paramsPos = prettyFunctionName.find('(');
-    if (paramsPos != std::string::npos)
+    const char* paramsPos = strchr(prettyFunctionName, '(');
+    size_t length = strlen(prettyFunctionName);
+
+    if (paramsPos != NULL)
     {
-        prettyFunctionName = prettyFunctionName.substr(0, paramsPos);
+        length = paramsPos - prettyFunctionName;
     }
 
-    size_t spacePos = prettyFunctionName.rfind(' ');
-    if (spacePos != std::string::npos)
+    char* result = (char*)malloc(length + 1);
+
+    if (result == NULL)
     {
-        prettyFunctionName = prettyFunctionName.substr(spacePos + 1);
+        return NULL;
     }
 
-    return std::string(prettyFunctionName);
+    if (strncpy_s(result, length + 1, prettyFunctionName, length) != 0)
+    {
+        free(result);
+        return NULL;
+    }
+
+    result[length] = '\0';
+
+    const char* spacePos = strrchr(result, ' ');
+    if (spacePos != NULL)
+    {
+        memmove(result, spacePos + 1, strlen(spacePos));
+    }
+
+    return result;
 }
 
 } // namespace aero3d

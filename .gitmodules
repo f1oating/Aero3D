@@ -1,3 +1,0 @@
-[submodule "Dependencies/glfw"]
-	path = Dependencies/glfw
-	url = https://github.com/f1oating/glfw

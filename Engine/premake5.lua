@@ -13,10 +13,10 @@ project "Engine"
 		"src/Core/**.cpp",
 		"src/Graphics/**.h",
 		"src/Graphics/**.cpp",
-		"src/Input/**.h",
-		"src/Input/**.cpp",
-		"src/Resources/**.h",
-		"src/Resources/**.cpp",
+		"src/Platform/OpenGL/**.h",
+		"src/Platform/OpenGL/**.cpp",
+		"src/IO/**.h",
+		"src/IO/**.cpp",
 		"src/Scene/**.h",
 		"src/Scene/**.cpp",
 		"src/Utils/**.h",
@@ -26,22 +26,18 @@ project "Engine"
 	includedirs
 	{
 		"src",
-		"%{IncludeDir.glfw}"
+		"%{IncludeDir.sdl}",
+		"%{IncludeDir.glad}"
 	}
 
 	links
 	{
-		"glfw"
+		"%{WindowsLibrary.sdl}",
+		"%{WindowsLibrary.glad}"
 	}
 
 	filter "system:windows"
 		systemversion "latest"
-
-		files
-		{
-			"src/Platform/Windows/**.h",
-			"src/Platform/Windows/**.cpp",
-		}
 
 		defines
 		{
