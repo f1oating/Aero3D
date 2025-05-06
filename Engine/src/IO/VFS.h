@@ -2,7 +2,7 @@
 #define AERO3D_IO_VFS_H_
 
 #include <string>
-#include <map>
+#include <vector>
 #include <memory>
 
 #include "IO/VFDirectory.h"
@@ -12,12 +12,12 @@ namespace aero3d {
 
 class VFS {
 public:
-    static void Mount(const std::string& archivePath, const std::string& mountPoint = "/");
+    static void Mount(const std::wstring& path, const std::wstring& mountPoint = L"");
 
-    static std::unique_ptr<VFile> ReadFile(const std::string& virtualPath);
+    static std::unique_ptr<VFile> ReadFile(const std::wstring& virtualPath);
 
 private:
-    std::map<std::string, std::unique_ptr<VFDirectory>> m_Dirs;
+    static std::vector<std::unique_ptr<VFDirectory>> m_Dirs;
 
 };
 

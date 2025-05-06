@@ -10,18 +10,10 @@ class VFile
 public:
     virtual ~VFile() = default;
 
-    virtual void ReadBytes(void* buffer, size_t size) = 0;
-    virtual void Seek(uint64_t pos) = 0;
+    virtual void ReadBytes(void* buffer, size_t size, size_t start = 0) = 0;
 
-    uint64_t GetPosition() { return m_Position; }
-    uint64_t GetLength() { return m_Length; }
-    std::string GetName() { return m_Name; }
-
-protected:
-    uint64_t m_Position;
-    uint64_t m_Length;
-    std::string m_Name;
-    void* m_Handle;
+    virtual uint64_t GetLength() const = 0;
+    virtual std::wstring GetName() const = 0;
 
 };
 

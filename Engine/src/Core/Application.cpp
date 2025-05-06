@@ -3,6 +3,8 @@
 #include "Utils/Log.h"
 #include "Core/Window.h"
 
+#include "IO/VFS.h"
+
 namespace aero3d {
 
 Application::Application()
@@ -30,6 +32,12 @@ bool Application::Init()
 
 void Application::Run()
 {
+    VFS::Mount(L"", L"");
+    std::unique_ptr<VFile> vf = VFS::ReadFile(L"example.txt");
+    char buffer[100];
+    vf->ReadBytes(buffer, vf->GetLength());
+    LogMsg(buffer);
+
     while (m_IsRunning)
     {
         Window::PollEvents(m_IsRunning);
