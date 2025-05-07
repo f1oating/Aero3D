@@ -37,12 +37,12 @@ static int ElementTypeSize(ElementType type)
 
 struct LayoutElement
 {
-    std::string_view Name;
+    const char* Name;
     int Size;
     int Offset;
     ElementType Type;
 
-    LayoutElement(std::string_view name, ElementType type)
+    LayoutElement(const char* name, ElementType type)
         : Name(name), Type(type), Size(ElementTypeSize(type)), Offset(0) {}
 };
 

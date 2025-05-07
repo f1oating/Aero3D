@@ -9,6 +9,13 @@
 
 namespace aero3d {
 
+enum class DirType
+{
+    NATIVE,
+    PAK,
+    ZIP
+};
+
 class VFDirectory
 {
 public:

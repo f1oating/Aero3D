@@ -2,6 +2,8 @@
 
 #include <glad/glad.h>
 
+#include <SDL3/SDL.h>
+
 #include "Utils/Log.h"
 
 namespace aero3d {

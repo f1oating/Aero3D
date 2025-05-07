@@ -1,5 +1,7 @@
 #include "Graphics/GraphicsContext.h"
 
+#include <memory>
+
 #include "Platform/OpenGL/OpenGLContext.h"
 
 namespace aero3d {
