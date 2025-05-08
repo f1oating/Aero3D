@@ -11,6 +11,7 @@ public:
     virtual ~VFile() = default;
 
     virtual void ReadBytes(void* buffer, size_t size, size_t start = 0) = 0;
+    virtual std::string ReadString() = 0;
 
     virtual uint64_t GetLength() const = 0;
     virtual std::wstring GetName() const = 0;

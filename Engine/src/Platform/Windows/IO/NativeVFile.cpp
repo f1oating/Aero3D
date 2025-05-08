@@ -54,6 +54,21 @@ void NativeVFile::ReadBytes(void* buffer, size_t size, size_t start)
     ReadFile(m_Handle, buffer, size, nullptr, nullptr);
 }
 
+std::string NativeVFile::ReadString()
+{
+    std::string result(static_cast<size_t>(m_Length), '\0');
+
+    LARGE_INTEGER li;
+    li.QuadPart = 0;
+    SetFilePointerEx(m_Handle, li, nullptr, FILE_BEGIN);
+
+    DWORD bytesRead = 0;
+    if (!ReadFile(m_Handle, result.data(), static_cast<DWORD>(m_Length), &bytesRead, nullptr) || bytesRead != m_Length)
+        return "";
+
+    return result;
+}
+
 uint64_t NativeVFile::GetLength() const
 {
     return m_Length;

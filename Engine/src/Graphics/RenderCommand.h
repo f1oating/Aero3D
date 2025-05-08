@@ -5,6 +5,7 @@
 
 #include "Graphics/Buffer.h"
 #include "Graphics/RenderAPI.h"
+#include "Graphics/Shader.h"
 
 namespace aero3d {
 
@@ -24,6 +25,8 @@ public:
 
     static std::shared_ptr<VertexBuffer> CreateVertexBuffer(BufferLayout& layout, const void* data, size_t size);
     static std::shared_ptr<IndexBuffer> CreateIndexBuffer(const void* data, size_t size, size_t count);
+
+    static std::shared_ptr<Shader> CreateShader(std::wstring vertexPath, std::wstring pixelPath);
 
 private:
     static std::unique_ptr<RenderAPI> m_API;

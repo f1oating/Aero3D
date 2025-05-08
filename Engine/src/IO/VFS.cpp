@@ -18,7 +18,7 @@ bool VFS::Init()
 
 void VFS::Shutdown()
 {
-    LogMsg("VFS Shutdow.");
+    LogMsg("VFS Shutdown.");
 }
 
 void VFS::Mount(const std::wstring& path, const std::wstring& mountPoint, DirType type)
@@ -30,7 +30,7 @@ void VFS::Mount(const std::wstring& path, const std::wstring& mountPoint, DirTyp
     }
 }
 
-std::unique_ptr<VFile> VFS::ReadFile(const std::wstring& virtualPath)
+std::shared_ptr<VFile> VFS::ReadFile(const std::wstring& virtualPath)
 {
     for (const auto& dir : m_Dirs)
     {

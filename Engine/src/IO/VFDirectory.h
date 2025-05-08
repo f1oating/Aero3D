@@ -21,7 +21,7 @@ class VFDirectory
 public:
     virtual ~VFDirectory() = default;
     
-    virtual std::unique_ptr<VFile> OpenFile(std::wstring path) = 0;
+    virtual std::shared_ptr<VFile> OpenFile(std::wstring path) = 0;
 
     virtual std::vector<std::wstring> ListFiles() = 0;
 

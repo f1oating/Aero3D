@@ -6,6 +6,7 @@
 #include "Utils/Assert.h"
 #include "Platform/OpenGL/OpenGLVertexBuffer.h"
 #include "Platform/OpenGL/OpenGLIndexBuffer.h"
+#include "Platform/OpenGL/OpenGLShader.h"
 
 namespace aero3d {
 
@@ -82,6 +83,11 @@ std::shared_ptr<VertexBuffer> OpenGLRenderAPI::CreateVertexBuffer(BufferLayout& 
 std::shared_ptr<IndexBuffer> OpenGLRenderAPI::CreateIndexBuffer(const void* data, size_t size, size_t count)
 {
     return std::make_shared<OpenGLIndexBuffer>(data, size, count);
+}
+
+std::shared_ptr<Shader> OpenGLRenderAPI::CreateShader(std::wstring& vertexPath, std::wstring& pixelPath)
+{
+    return std::make_shared<OpenGLShader>(vertexPath, pixelPath);
 }
 
 } // namespace aero3d

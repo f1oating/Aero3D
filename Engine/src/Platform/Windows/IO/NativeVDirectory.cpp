@@ -17,7 +17,7 @@ NativeVFDirectory::~NativeVFDirectory()
 {
 }
 
-std::unique_ptr<VFile> NativeVFDirectory::OpenFile(std::wstring path)
+std::shared_ptr<VFile> NativeVFDirectory::OpenFile(std::wstring path)
 {
     std::wstring fileRelativePath = path.substr(m_MountPoint.length());
     std::wstring filePath = m_Path + fileRelativePath;
@@ -32,7 +32,7 @@ std::unique_ptr<VFile> NativeVFDirectory::OpenFile(std::wstring path)
         nullptr
     );
 
-    return std::make_unique<NativeVFile>(fileHandle);
+    return std::make_shared<NativeVFile>(fileHandle);
 }
 
 std::vector<std::wstring> NativeVFDirectory::ListFiles()

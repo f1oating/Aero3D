@@ -14,6 +14,7 @@ public:
     ~NativeVFile();
 
     virtual void ReadBytes(void* buffer, size_t size, size_t start = 0) override;
+    virtual std::string ReadString() override;
 
     virtual uint64_t GetLength() const override;
     virtual std::wstring GetName() const override;

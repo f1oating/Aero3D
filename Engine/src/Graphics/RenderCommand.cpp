@@ -52,4 +52,9 @@ std::shared_ptr<IndexBuffer> RenderCommand::CreateIndexBuffer(const void* data, 
     return m_API->CreateIndexBuffer(data, size, count);
 }
 
+std::shared_ptr<Shader> RenderCommand::CreateShader(std::wstring vertexPath, std::wstring pixelPath)
+{
+    return m_API->CreateShader(vertexPath, pixelPath);
+}
+
 } // namespace aero3d

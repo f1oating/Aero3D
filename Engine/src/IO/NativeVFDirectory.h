@@ -11,7 +11,7 @@ public:
     NativeVFDirectory(const std::wstring& path, const std::wstring& mountPoint);
     ~NativeVFDirectory();
 
-    virtual std::unique_ptr<VFile> OpenFile(std::wstring path) override;
+    virtual std::shared_ptr<VFile> OpenFile(std::wstring path) override;
 
     virtual std::vector<std::wstring> ListFiles() override;
 

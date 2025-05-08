@@ -17,7 +17,7 @@ public:
 
     static void Mount(const std::wstring& path, const std::wstring& mountPoint = L"", DirType type = DirType::NATIVE);
 
-    static std::unique_ptr<VFile> ReadFile(const std::wstring& virtualPath);
+    static std::shared_ptr<VFile> ReadFile(const std::wstring& virtualPath);
 
 private:
     static std::vector<std::unique_ptr<VFDirectory>> m_Dirs;

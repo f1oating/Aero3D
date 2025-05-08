@@ -155,6 +155,7 @@
     <ClInclude Include="src\Graphics\GraphicsContext.h" />
     <ClInclude Include="src\Graphics\RenderAPI.h" />
     <ClInclude Include="src\Graphics\RenderCommand.h" />
+    <ClInclude Include="src\Graphics\Shader.h" />
     <ClInclude Include="src\IO\NativeVFDirectory.h" />
     <ClInclude Include="src\IO\NativeVFile.h" />
     <ClInclude Include="src\IO\VFile.h" />
@@ -163,6 +164,7 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLIndexBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRenderAPI.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexBuffer.h" />
     <ClInclude Include="src\Utils\API.h" />
     <ClInclude Include="src\Utils\Assert.h" />
@@ -178,6 +180,7 @@
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLIndexBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLRenderAPI.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexBuffer.cpp" />
     <ClCompile Include="src\Platform\Windows\IO\NativeVDirectory.cpp" />
     <ClCompile Include="src\Platform\Windows\IO\NativeVFile.cpp" />
