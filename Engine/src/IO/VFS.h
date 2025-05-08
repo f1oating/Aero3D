@@ -12,6 +12,9 @@ namespace aero3d {
 
 class VFS {
 public:
+    static bool Init();
+    static void Shutdown();
+
     static void Mount(const std::wstring& path, const std::wstring& mountPoint = L"", DirType type = DirType::NATIVE);
 
     static std::unique_ptr<VFile> ReadFile(const std::wstring& virtualPath);

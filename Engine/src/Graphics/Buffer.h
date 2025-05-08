@@ -27,9 +27,9 @@ static int ElementTypeSize(ElementType type)
     case ElementType::INT2: return 8;
     case ElementType::INT3: return 12;
     case ElementType::INT4: return 16;
-    case ElementType::BOOL: return 4;
-    case ElementType::MAT2: return 32;
-    case ElementType::MAT3: return 48;
+    case ElementType::BOOL: return 1;
+    case ElementType::MAT2: return 16;
+    case ElementType::MAT3: return 36;
     case ElementType::MAT4: return 64;
     default: Assert("This ElementType doesnt exist !", false);
     }
@@ -44,6 +44,28 @@ struct LayoutElement
 
     LayoutElement(const char* name, ElementType type)
         : Name(name), Type(type), Size(ElementTypeSize(type)), Offset(0) {}
+
+    uint32_t GetComponentCount() const
+    {
+        switch (Type)
+        {
+        case ElementType::FLOAT: return 1;
+        case ElementType::FLOAT2: return 2;
+        case ElementType::FLOAT3: return 3;
+        case ElementType::FLOAT4: return 4;
+        case ElementType::INT: return 1;
+        case ElementType::INT2: return 2;
+        case ElementType::INT3: return 3;
+        case ElementType::INT4: return 4;
+        case ElementType::BOOL: return 1;
+        case ElementType::MAT2: return 4;
+        case ElementType::MAT3: return 9;
+        case ElementType::MAT4: return 16;
+        default: Assert("This ElementType doesnt exist !", false);
+        }
+        return 0;
+    }
+
 };
 
 struct BufferLayout

@@ -2,10 +2,24 @@
 
 #include "IO/NativeVFDirectory.h"
 #include "Utils/Assert.h"
+#include "Utils/Log.h"
 
 namespace aero3d {
 
 std::vector<std::unique_ptr<VFDirectory>> VFS::m_Dirs;
+
+bool VFS::Init()
+{
+    LogMsg("VFS Initialize.");
+    Mount(L"", L"", DirType::NATIVE);
+
+    return true;
+}
+
+void VFS::Shutdown()
+{
+    LogMsg("VFS Shutdow.");
+}
 
 void VFS::Mount(const std::wstring& path, const std::wstring& mountPoint, DirType type)
 {

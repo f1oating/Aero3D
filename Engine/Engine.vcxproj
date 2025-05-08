@@ -154,6 +154,7 @@
     <ClInclude Include="src\Graphics\Buffer.h" />
     <ClInclude Include="src\Graphics\GraphicsContext.h" />
     <ClInclude Include="src\Graphics\RenderAPI.h" />
+    <ClInclude Include="src\Graphics\RenderCommand.h" />
     <ClInclude Include="src\IO\NativeVFDirectory.h" />
     <ClInclude Include="src\IO\NativeVFile.h" />
     <ClInclude Include="src\IO\VFile.h" />
@@ -172,6 +173,7 @@
     <ClCompile Include="src\Core\Application.cpp" />
     <ClCompile Include="src\Core\Window.cpp" />
     <ClCompile Include="src\Graphics\GraphicsContext.cpp" />
+    <ClCompile Include="src\Graphics\RenderCommand.cpp" />
     <ClCompile Include="src\IO\VFS.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLIndexBuffer.cpp" />
