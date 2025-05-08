@@ -22,6 +22,11 @@ public:
     virtual void Draw(std::shared_ptr<VertexBuffer> vb, size_t count) override;
     virtual void DrawIndexed(std::shared_ptr<VertexBuffer> vb, std::shared_ptr<IndexBuffer> ib) override;
 
+    virtual std::shared_ptr<VertexBuffer> CreateVertexBuffer(BufferLayout& layout, const void* data, size_t size) override;
+    virtual std::shared_ptr<IndexBuffer> CreateIndexBuffer(const void* data, size_t size, size_t count) override;
+
+    virtual std::shared_ptr<Shader> CreateShader(std::wstring& vertexPath, std::wstring& pixelPath) override;
+
 };
 
 } // namespace aero3d

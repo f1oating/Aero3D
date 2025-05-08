@@ -1,5 +1,7 @@
 #include "Core/Window.h"
 
+#include <memory>
+
 #include "Utils/Log.h"
 
 namespace aero3d {

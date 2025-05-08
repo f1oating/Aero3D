@@ -39,7 +39,7 @@ OpenGLVertexBuffer::OpenGLVertexBuffer(BufferLayout& layout, const void* data, s
     auto elements = layout.GetElements();
     for (size_t i = 0; i < elements.size(); ++i)
     {
-        glVertexAttribPointer(i, elements[i].Size, ToGLType(elements[i].Type), GL_FALSE, layout.GetStride(), (const void*)elements[i].Offset);
+        glVertexAttribPointer(i, elements[i].GetComponentCount(), ToGLType(elements[i].Type), GL_FALSE, layout.GetStride(), (const void*)elements[i].Offset);
         glEnableVertexAttribArray(i);
     }
 
