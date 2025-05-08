@@ -99,6 +99,10 @@ void Application::Run()
         0.5f, -0.5f
     };
 
+    unsigned int indices[] = {
+        0, 1, 2
+    };
+
     std::vector<LayoutElement> elements = {
         { "a_Position", ElementType::FLOAT2 }
     };
@@ -106,7 +110,8 @@ void Application::Run()
     unsigned int shaderProgram = CreateShaderProgram();
 
     BufferLayout layout(std::move(elements));
-    std::shared_ptr<VertexBuffer> vb = std::make_shared<OpenGLVertexBuffer>(layout, vertices, 6 * 4);
+    std::shared_ptr<VertexBuffer> vb = RenderCommand::CreateVertexBuffer(layout, vertices, 6 * 4);
+    std::shared_ptr<IndexBuffer> ib = RenderCommand::CreateIndexBuffer(indices, 12, 3);
 
     RenderCommand::SetViewport(0, 0, 800, 600);
     RenderCommand::SetClearColor(0.2f, 0.3f, 0.2f, 1.0f);
@@ -117,7 +122,7 @@ void Application::Run()
         RenderCommand::Clear();
 
         glUseProgram(shaderProgram);
-        RenderCommand::Draw(vb, 3);
+        RenderCommand::DrawIndexed(vb, ib);
 
         Window::SwapBuffers();
     }

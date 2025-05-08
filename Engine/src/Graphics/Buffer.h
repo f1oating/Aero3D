@@ -111,7 +111,7 @@ enum class IndexBufferType
 class A3D_API IndexBuffer
 {
 public:
-    IndexBuffer(IndexBufferType type = IndexBufferType::UNSIGNED_SHORT)
+    IndexBuffer(IndexBufferType type = IndexBufferType::UNSIGNED_INT)
         : m_Type(type) {}
     ~IndexBuffer() = default;
 

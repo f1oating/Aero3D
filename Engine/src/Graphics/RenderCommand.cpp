@@ -42,4 +42,14 @@ void RenderCommand::DrawIndexed(std::shared_ptr<VertexBuffer> vb, std::shared_pt
     m_API->DrawIndexed(vb, ib);
 }
 
+std::shared_ptr<VertexBuffer> RenderCommand::CreateVertexBuffer(BufferLayout& layout, const void* data, size_t size)
+{
+    return m_API->CreateVertexBuffer(layout, data, size);
+}
+
+std::shared_ptr<IndexBuffer> RenderCommand::CreateIndexBuffer(const void* data, size_t size, size_t count)
+{
+    return m_API->CreateIndexBuffer(data, size, count);
+}
+
 } // namespace aero3d

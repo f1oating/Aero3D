@@ -22,6 +22,9 @@ public:
     static void Draw(std::shared_ptr<VertexBuffer> vb, size_t count);
     static void DrawIndexed(std::shared_ptr<VertexBuffer> vb, std::shared_ptr<IndexBuffer> ib);
 
+    static std::shared_ptr<VertexBuffer> CreateVertexBuffer(BufferLayout& layout, const void* data, size_t size);
+    static std::shared_ptr<IndexBuffer> CreateIndexBuffer(const void* data, size_t size, size_t count);
+
 private:
     static std::unique_ptr<RenderAPI> m_API;
 
