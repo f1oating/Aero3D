@@ -9,7 +9,7 @@ OpenGLConstantBuffer::OpenGLConstantBuffer(const void* data, size_t size)
 {
     glGenBuffers(1, &m_CBO);
     glBindBuffer(GL_UNIFORM_BUFFER, m_CBO);
-    glBufferData(GL_UNIFORM_BUFFER, size, data, GL_STATIC_DRAW);
+    glBufferData(GL_UNIFORM_BUFFER, size, data, GL_DYNAMIC_DRAW);
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
