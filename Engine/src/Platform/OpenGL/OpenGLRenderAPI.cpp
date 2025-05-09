@@ -85,7 +85,7 @@ std::shared_ptr<IndexBuffer> OpenGLRenderAPI::CreateIndexBuffer(const void* data
     return std::make_shared<OpenGLIndexBuffer>(data, size, count);
 }
 
-std::shared_ptr<Shader> OpenGLRenderAPI::CreateShader(std::wstring& vertexPath, std::wstring& pixelPath)
+std::shared_ptr<Shader> OpenGLRenderAPI::CreateShader(const char* vertexPath, const char* pixelPath)
 {
     return std::make_shared<OpenGLShader>(vertexPath, pixelPath);
 }

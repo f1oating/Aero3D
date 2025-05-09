@@ -11,6 +11,8 @@ extern A3D_API const char* GetPathAfter(const char* path, const char* after);
 
 extern A3D_API const char* ExtractClassAndFunctionName(const char* prettyFunctionName);
 
+extern A3D_API const char* ConcatStrings(const char* str1, const char* str2);
+
 } // namespace aero3d
 
 #endif // AERO3D_UTILS_STRINGMANIP_H_

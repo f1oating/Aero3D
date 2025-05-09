@@ -4,10 +4,10 @@
 
 namespace aero3d {
 
-static std::wstring GetFileNameOnlyFromHandle(HANDLE hFile)
+static const char* GetFileNameOnlyFromHandle(HANDLE hFile)
 {
-    wchar_t buffer[MAX_PATH];
-    DWORD result = GetFinalPathNameByHandleW(
+    char buffer[MAX_PATH];
+    DWORD result = GetFinalPathNameByHandleA(
         hFile,
         buffer,
         MAX_PATH,
@@ -15,19 +15,27 @@ static std::wstring GetFileNameOnlyFromHandle(HANDLE hFile)
     );
 
     if (result == 0 || result >= MAX_PATH)
-        return L"";
+        return "";
 
-    std::wstring fullPath(buffer);
+    const char* prefix = "\\\\?\\";
+    size_t prefixLen = strlen(prefix);
 
-    const std::wstring prefix = L"\\\\?\\";
-    if (fullPath.starts_with(prefix))
-        fullPath = fullPath.substr(prefix.length());
+    if (strncmp(buffer, prefix, prefixLen) == 0)
+    {
+        memmove(buffer, buffer + prefixLen, strlen(buffer + prefixLen) + 1);
+    }
 
-    size_t pos = fullPath.find_last_of(L"\\/");
-    if (pos != std::wstring::npos)
-        return fullPath.substr(pos + 1);
+    const char* lastSlash = strrchr(buffer, '\\');
+    const char* lastAltSlash = strrchr(buffer, '/');
+
+    const char* fileName = lastSlash;
+    if (!fileName || (lastAltSlash && lastAltSlash > lastSlash))
+        fileName = lastAltSlash;
+
+    if (fileName)
+        return fileName + 1;
     else
-        return fullPath;
+        return buffer;
 }
 
 NativeVFile::NativeVFile(void* handle)
@@ -74,7 +82,7 @@ uint64_t NativeVFile::GetLength() const
     return m_Length;
 }
 
-std::wstring NativeVFile::GetName() const
+const char* NativeVFile::GetName() const
 {
     return m_Name;
 }

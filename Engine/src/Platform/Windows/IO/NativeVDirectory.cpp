@@ -2,12 +2,14 @@
 
 #include <Windows.h>
 #include <memory>
+#include <string.h>
 
 #include "IO/NativeVFile.h"
+#include "Utils/StringManip.h"
 
 namespace aero3d {
 
-NativeVFDirectory::NativeVFDirectory(const std::wstring& path, const std::wstring& mountPoint)
+NativeVFDirectory::NativeVFDirectory(const char* path, const char* mountPoint)
 {
     m_Path = path;
     m_MountPoint = mountPoint;
@@ -17,13 +19,13 @@ NativeVFDirectory::~NativeVFDirectory()
 {
 }
 
-std::shared_ptr<VFile> NativeVFDirectory::OpenFile(std::wstring path)
+std::shared_ptr<VFile> NativeVFDirectory::OpenFile(const char* path)
 {
-    std::wstring fileRelativePath = path.substr(m_MountPoint.length());
-    std::wstring filePath = m_Path + fileRelativePath;
+    const char* fileRelativePath = path + strlen(m_MountPoint);
+    const char* filePath = ConcatStrings(m_Path, fileRelativePath);
 
-    HANDLE fileHandle = CreateFileW(
-        filePath.c_str(),
+    HANDLE fileHandle = CreateFileA(
+        filePath,
         GENERIC_READ,
         FILE_SHARE_READ,
         nullptr,
@@ -35,9 +37,9 @@ std::shared_ptr<VFile> NativeVFDirectory::OpenFile(std::wstring path)
     return std::make_shared<NativeVFile>(fileHandle);
 }
 
-bool NativeVFDirectory::FileExists(std::wstring path)
+bool NativeVFDirectory::FileExists(const char* path)
 {
-    DWORD attrs = GetFileAttributesW(path.c_str());
+    DWORD attrs = GetFileAttributesA(path);
     return (attrs != INVALID_FILE_ATTRIBUTES) && !(attrs & FILE_ATTRIBUTE_DIRECTORY);
 }
 

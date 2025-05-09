@@ -64,7 +64,7 @@ void Application::Run()
     std::shared_ptr<VertexBuffer> vb = RenderCommand::CreateVertexBuffer(layout, vertices, 6 * 4);
     std::shared_ptr<IndexBuffer> ib = RenderCommand::CreateIndexBuffer(indices, 12, 3);
 
-    std::shared_ptr<Shader> shader = RenderCommand::CreateShader(L"vertex.glsl", L"pixel.glsl");
+    std::shared_ptr<Shader> shader = RenderCommand::CreateShader("vertex.glsl", "pixel.glsl");
 
     RenderCommand::SetViewport(0, 0, 800, 600);
     RenderCommand::SetClearColor(0.2f, 0.3f, 0.2f, 1.0f);

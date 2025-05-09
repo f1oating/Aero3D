@@ -52,7 +52,7 @@ std::shared_ptr<IndexBuffer> RenderCommand::CreateIndexBuffer(const void* data, 
     return m_API->CreateIndexBuffer(data, size, count);
 }
 
-std::shared_ptr<Shader> RenderCommand::CreateShader(std::wstring vertexPath, std::wstring pixelPath)
+std::shared_ptr<Shader> RenderCommand::CreateShader(const char* vertexPath, const char* pixelPath)
 {
     return m_API->CreateShader(vertexPath, pixelPath);
 }

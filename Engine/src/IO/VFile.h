@@ -14,7 +14,7 @@ public:
     virtual std::string ReadString() = 0;
 
     virtual uint64_t GetLength() const = 0;
-    virtual std::wstring GetName() const = 0;
+    virtual const char* GetName() const = 0;
 
 };
 

@@ -26,7 +26,7 @@ public:
     static std::shared_ptr<VertexBuffer> CreateVertexBuffer(BufferLayout& layout, const void* data, size_t size);
     static std::shared_ptr<IndexBuffer> CreateIndexBuffer(const void* data, size_t size, size_t count);
 
-    static std::shared_ptr<Shader> CreateShader(std::wstring vertexPath, std::wstring pixelPath);
+    static std::shared_ptr<Shader> CreateShader(const char* vertexPath, const char* pixelPath);
 
 private:
     static std::unique_ptr<RenderAPI> m_API;

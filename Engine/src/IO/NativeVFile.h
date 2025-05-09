@@ -17,11 +17,11 @@ public:
     virtual std::string ReadString() override;
 
     virtual uint64_t GetLength() const override;
-    virtual std::wstring GetName() const override;
+    virtual const char* GetName() const override;
 
 private:
     uint64_t m_Length;
-    std::wstring m_Name;
+    const char* m_Name;
     void* m_Handle;
 
 };

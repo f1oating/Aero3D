@@ -10,7 +10,7 @@ namespace aero3d {
 class OpenGLShader : public Shader
 {
 public:
-    OpenGLShader(std::wstring& vertexPath, std::wstring& pixelPath);
+    OpenGLShader(const char* vertexPath, const char* pixelPath);
     ~OpenGLShader();
 
     virtual void Bind() override;

@@ -9,7 +9,7 @@
 namespace aero3d {
 
 std::vector<std::unique_ptr<VFDirectory>> VFS::m_Dirs;
-std::unique_ptr<VFDirectory> VFS::m_DefaultDir = std::make_unique<NativeVFDirectory>(L"", L"");
+std::unique_ptr<VFDirectory> VFS::m_DefaultDir = std::make_unique<NativeVFDirectory>("", "");
 
 bool VFS::Init()
 {
@@ -23,7 +23,7 @@ void VFS::Shutdown()
     LogMsg("VFS Shutdown.");
 }
 
-void VFS::Mount(const std::wstring& path, const std::wstring& mountPoint, DirType type)
+void VFS::Mount(const char* path, const char* mountPoint, DirType type)
 {
     switch (type)
     {
@@ -32,13 +32,13 @@ void VFS::Mount(const std::wstring& path, const std::wstring& mountPoint, DirTyp
     }
 }
 
-std::shared_ptr<VFile> VFS::ReadFile(const std::wstring& virtualPath)
+std::shared_ptr<VFile> VFS::ReadFile(const char* virtualPath)
 {
     for (const auto& dir : m_Dirs)
     {
-        const std::wstring& mountPoint = dir->GetMountPoint();
+        const char* mountPoint = dir->GetMountPoint();
 
-        if (virtualPath.starts_with(mountPoint))
+        if (strcmp(virtualPath, mountPoint) == 0)
         {
             if (dir->FileExists(virtualPath))
             {
