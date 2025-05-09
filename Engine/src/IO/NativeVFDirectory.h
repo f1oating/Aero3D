@@ -13,7 +13,7 @@ public:
 
     virtual std::shared_ptr<VFile> OpenFile(std::wstring path) override;
 
-    virtual std::vector<std::wstring> ListFiles() override;
+    virtual bool FileExists(std::wstring path) override;
 
 };
 

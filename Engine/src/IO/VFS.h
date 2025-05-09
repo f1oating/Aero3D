@@ -21,6 +21,7 @@ public:
 
 private:
     static std::vector<std::unique_ptr<VFDirectory>> m_Dirs;
+    static std::unique_ptr<VFDirectory> m_DefaultDir;
 
 };
 

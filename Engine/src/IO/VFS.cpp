@@ -1,5 +1,7 @@
 #include "IO/VFS.h"
 
+#include <memory>
+
 #include "IO/NativeVFDirectory.h"
 #include "Utils/Assert.h"
 #include "Utils/Log.h"
@@ -7,11 +9,11 @@
 namespace aero3d {
 
 std::vector<std::unique_ptr<VFDirectory>> VFS::m_Dirs;
+std::unique_ptr<VFDirectory> VFS::m_DefaultDir = std::make_unique<NativeVFDirectory>(L"", L"");
 
 bool VFS::Init()
 {
     LogMsg("VFS Initialize.");
-    Mount(L"", L"", DirType::NATIVE);
 
     return true;
 }
@@ -36,10 +38,18 @@ std::shared_ptr<VFile> VFS::ReadFile(const std::wstring& virtualPath)
     {
         const std::wstring& mountPoint = dir->GetMountPoint();
 
-        if (virtualPath == mountPoint || virtualPath.starts_with(mountPoint))
+        if (virtualPath.starts_with(mountPoint))
         {
-            return dir->OpenFile(virtualPath);
+            if (dir->FileExists(virtualPath))
+            {
+                return dir->OpenFile(virtualPath);
+            }
         }
+    }
+
+    if (m_DefaultDir->FileExists(virtualPath))
+    {
+        return m_DefaultDir->OpenFile(virtualPath);
     }
 
     return nullptr;

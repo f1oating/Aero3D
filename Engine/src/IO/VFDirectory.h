@@ -23,7 +23,7 @@ public:
     
     virtual std::shared_ptr<VFile> OpenFile(std::wstring path) = 0;
 
-    virtual std::vector<std::wstring> ListFiles() = 0;
+    virtual bool FileExists(std::wstring path) = 0;
 
     std::wstring GetPath() const { return m_Path; }
     std::wstring GetMountPoint() const { return m_MountPoint; }

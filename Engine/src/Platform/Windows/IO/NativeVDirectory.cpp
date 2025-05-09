@@ -35,10 +35,10 @@ std::shared_ptr<VFile> NativeVFDirectory::OpenFile(std::wstring path)
     return std::make_shared<NativeVFile>(fileHandle);
 }
 
-std::vector<std::wstring> NativeVFDirectory::ListFiles()
+bool NativeVFDirectory::FileExists(std::wstring path)
 {
-    std::vector<std::wstring> v;
-    return v;
+    DWORD attrs = GetFileAttributesW(path.c_str());
+    return (attrs != INVALID_FILE_ATTRIBUTES) && !(attrs & FILE_ATTRIBUTE_DIRECTORY);
 }
 
 } // namespace aero3d
