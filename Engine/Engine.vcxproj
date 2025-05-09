@@ -152,6 +152,7 @@
     <ClInclude Include="src\Core\Application.h" />
     <ClInclude Include="src\Core\Window.h" />
     <ClInclude Include="src\Graphics\Buffer.h" />
+    <ClInclude Include="src\Graphics\ConstantBuffer.h" />
     <ClInclude Include="src\Graphics\GraphicsContext.h" />
     <ClInclude Include="src\Graphics\RenderAPI.h" />
     <ClInclude Include="src\Graphics\RenderCommand.h" />
@@ -161,11 +162,11 @@
     <ClInclude Include="src\IO\VFile.h" />
     <ClInclude Include="src\IO\VFS.h" />
     <ClInclude Include="src\IO\VFDirectory.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLConstantBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLIndexBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRenderAPI.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLVertexBuffer.h" />
     <ClInclude Include="src\Utils\API.h" />
     <ClInclude Include="src\Utils\Assert.h" />
     <ClInclude Include="src\Utils\Log.h" />
@@ -177,11 +178,11 @@
     <ClCompile Include="src\Graphics\GraphicsContext.cpp" />
     <ClCompile Include="src\Graphics\RenderCommand.cpp" />
     <ClCompile Include="src\IO\VFS.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLConstantBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLIndexBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLRenderAPI.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLVertexBuffer.cpp" />
     <ClCompile Include="src\Platform\Windows\IO\NativeVDirectory.cpp" />
     <ClCompile Include="src\Platform\Windows\IO\NativeVFile.cpp" />
     <ClCompile Include="src\Utils\Assert.cpp" />

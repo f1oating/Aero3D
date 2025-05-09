@@ -4,6 +4,7 @@
 #include <memory>
 
 #include "Graphics/Buffer.h"
+#include "Graphics/ConstantBuffer.h"
 #include "Graphics/RenderAPI.h"
 #include "Graphics/Shader.h"
 
@@ -25,6 +26,7 @@ public:
 
     static std::shared_ptr<VertexBuffer> CreateVertexBuffer(BufferLayout& layout, const void* data, size_t size);
     static std::shared_ptr<IndexBuffer> CreateIndexBuffer(const void* data, size_t size, size_t count);
+    static std::shared_ptr<ConstantBuffer> CreateConstantBuffer(const void* data, size_t size);
 
     static std::shared_ptr<Shader> CreateShader(const char* vertexPath, const char* pixelPath);
 

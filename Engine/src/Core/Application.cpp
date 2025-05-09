@@ -7,7 +7,7 @@
 
 #include "Graphics/Buffer.h"
 #include "Graphics/Shader.h"
-#include "Platform/OpenGL/OpenGLVertexBuffer.h"
+#include "Graphics/ConstantBuffer.h"
 
 namespace aero3d {
 
@@ -75,6 +75,7 @@ void Application::Run()
         RenderCommand::Clear();
 
         shader->Bind();
+
         RenderCommand::DrawIndexed(vb, ib);
         shader->Unbind();
 

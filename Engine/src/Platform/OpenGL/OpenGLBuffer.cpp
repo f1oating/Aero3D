@@ -1,10 +1,12 @@
-#include "Platform/OpenGL/OpenGLVertexBuffer.h"
+#include "Platform/OpenGL/OpenGLBuffer.h"
 
 #include <glad/glad.h>
 
 #include "Utils/Assert.h"
 
 namespace aero3d {
+
+///////////////////// Vertex Buffer //////////////////////
 
 static GLenum ToGLType(ElementType type)
 {
@@ -66,6 +68,37 @@ void OpenGLVertexBuffer::SetData(const void* data, size_t size)
 {
     glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
     glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);
+}
+
+////////////////////// Index Buffer //////////////////////
+
+OpenGLIndexBuffer::OpenGLIndexBuffer(const void* data, size_t size, size_t count)
+    : m_IBO(0), m_IndexCount(count)
+{
+    glGenBuffers(1, &m_IBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
+
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
+}
+
+OpenGLIndexBuffer::~OpenGLIndexBuffer()
+{
+    glDeleteBuffers(1, &m_IBO);
+}
+
+void OpenGLIndexBuffer::Bind()
+{
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
+}
+
+void OpenGLIndexBuffer::Unbind()
+{
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
+
+size_t OpenGLIndexBuffer::GetIndexCount()
+{
+    return m_IndexCount;
 }
 
 } // namespace aero3d
