@@ -32,10 +32,10 @@ inline void PrintTimestamp()
 
 inline void PrintFileInfo(const char* path, const char* func, int line)
 {
-    printf("%s[%s] (%s) Line: (%d): %s",
+    printf("%s[%s] (%s) Line: (%d):%s",
         RED,
-        GetPathAfter(path, "src"),
-        ExtractClassAndFunctionName(func),
+        GetPathAfter(path, "src").c_str(),
+        ExtractClassAndFunctionName(func).c_str(),
         line,
         RESET);
 }

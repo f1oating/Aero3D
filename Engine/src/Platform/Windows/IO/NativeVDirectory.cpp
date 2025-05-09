@@ -6,6 +6,7 @@
 
 #include "IO/NativeVFile.h"
 #include "Utils/StringManip.h"
+#include "Utils/Log.h"
 
 namespace aero3d {
 
@@ -22,10 +23,10 @@ NativeVFDirectory::~NativeVFDirectory()
 std::shared_ptr<VFile> NativeVFDirectory::OpenFile(const char* path)
 {
     const char* fileRelativePath = path + strlen(m_MountPoint);
-    const char* filePath = ConcatStrings(m_Path, fileRelativePath);
+    std::string filePath = ConcatStrings(m_Path, fileRelativePath);
 
     HANDLE fileHandle = CreateFileA(
-        filePath,
+        filePath.c_str(),
         GENERIC_READ,
         FILE_SHARE_READ,
         nullptr,
@@ -33,6 +34,12 @@ std::shared_ptr<VFile> NativeVFDirectory::OpenFile(const char* path)
         FILE_ATTRIBUTE_NORMAL,
         nullptr
     );
+
+    if (fileHandle == INVALID_HANDLE_VALUE)
+    {
+        LogErr(ERROR_INFO, "Failed to open file: %s", path);
+        return nullptr;
+    }
 
     return std::make_shared<NativeVFile>(fileHandle);
 }

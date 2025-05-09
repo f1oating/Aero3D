@@ -52,6 +52,7 @@ std::shared_ptr<VFile> VFS::ReadFile(const char* virtualPath)
         return m_DefaultDir->OpenFile(virtualPath);
     }
 
+    LogErr(ERROR_INFO, "File dont exist: %s", virtualPath);
     return nullptr;
 }
 
