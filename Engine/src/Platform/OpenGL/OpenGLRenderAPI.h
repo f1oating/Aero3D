@@ -29,6 +29,8 @@ public:
     virtual std::shared_ptr<Shader> CreateShader(const char* vertexPath, const char* pixelPath) override;
     virtual std::shared_ptr<Texture> CreateTexture(const char* path) override;
 
+    virtual RenderAPI::API GetAPI() override;
+
 };
 
 } // namespace aero3d

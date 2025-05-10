@@ -32,8 +32,10 @@ public:
     static std::shared_ptr<Shader> CreateShader(const char* vertexPath, const char* pixelPath);
     static std::shared_ptr<Texture> CreateTexture(const char* path);
 
+    static RenderAPI::API GetAPI();
+
 private:
-    static std::unique_ptr<RenderAPI> m_API;
+    static std::unique_ptr<RenderAPI> s_API;
 
 };
 

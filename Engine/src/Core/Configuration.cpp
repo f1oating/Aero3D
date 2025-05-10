@@ -9,56 +9,61 @@
 
 namespace aero3d {
 
-    std::unordered_map<std::string, std::string> Configuration::m_ConfigMap;
-    std::shared_ptr<VFile> Configuration::m_ConfigFile = nullptr;
+std::unordered_map<std::string, std::string> Configuration::s_ConfigMap;
+std::shared_ptr<VFile> Configuration::s_ConfigFile = nullptr;
 
-    static std::unordered_map<std::string, std::string> parseKeyValueString(const std::string& input) {
-        std::unordered_map<std::string, std::string> result;
-        std::istringstream stream(input);
-        std::string line;
+static std::unordered_map<std::string, std::string> parseKeyValueString(const std::string& input) {
+    std::unordered_map<std::string, std::string> result;
+    std::istringstream stream(input);
+    std::string line;
 
-        while (std::getline(stream, line)) {
-            if (line.empty()) continue;
+    while (std::getline(stream, line)) {
+        if (line.empty()) continue;
 
-            std::string key, value;
-            std::istringstream lineStream(line);
+        std::string key, value;
+        std::istringstream lineStream(line);
 
-            if (std::getline(lineStream, key, '=') && std::getline(lineStream, value)) {
-                result[key] = value;
-            }
+        if (std::getline(lineStream, key, '=') && std::getline(lineStream, value)) {
+            result[key] = value;
         }
-
-        return result;
     }
 
-    static std::string serializeKeyValueMap(const std::unordered_map<std::string, std::string>& map) {
-        std::ostringstream stream;
+    return result;
+}
 
-        for (const auto& [key, value] : map) {
-            stream << key << '=' << value << '\n';
-        }
+static std::string serializeKeyValueMap(const std::unordered_map<std::string, std::string>& map) {
+    std::ostringstream stream;
 
-        return stream.str();
+    for (const auto& [key, value] : map) {
+        stream << key << '=' << value << '\n';
     }
 
-    bool Configuration::Init()
-    {
-        LogMsg("Configuration Initialize.");
+    return stream.str();
+}
 
-        m_ConfigFile = VFS::ReadFile("res/config.conf");
-        m_ConfigMap = parseKeyValueString(m_ConfigFile->ReadString());
+bool Configuration::Init()
+{
+    LogMsg("Configuration Initialize.");
 
-        return true;
-    }
+    s_ConfigFile = VFS::ReadFile("res/config.conf");
+    s_ConfigMap = parseKeyValueString(s_ConfigFile->ReadString());
 
-    void Configuration::Shutdown()
-    {
-        LogMsg("Configuration Shutdown.");
+    return true;
+}
 
-        std::string str = serializeKeyValueMap(m_ConfigMap);
+void Configuration::Shutdown()
+{
+    LogMsg("Configuration Shutdown.");
 
-        m_ConfigFile->Truncate();
-        m_ConfigFile->WriteBytes((void*)str.c_str(), str.length());
-    }
+    std::string str = serializeKeyValueMap(s_ConfigMap);
+
+    s_ConfigFile->Truncate();
+    s_ConfigFile->WriteBytes((void*)str.c_str(), str.length());
+}
+
+std::string Configuration::GetValue(std::string key)
+{
+    return s_ConfigMap.at(key);
+}
 
 } // namespace aero3d

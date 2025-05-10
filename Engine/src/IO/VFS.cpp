@@ -8,8 +8,8 @@
 
 namespace aero3d {
 
-std::vector<std::unique_ptr<VFDirectory>> VFS::m_Dirs;
-std::unique_ptr<VFDirectory> VFS::m_DefaultDir = std::make_unique<NativeVFDirectory>("", "");
+std::vector<std::unique_ptr<VFDirectory>> VFS::s_Dirs;
+std::unique_ptr<VFDirectory> VFS::s_DefaultDir = std::make_unique<NativeVFDirectory>("", "");
 
 bool VFS::Init()
 {
@@ -27,14 +27,14 @@ void VFS::Mount(const char* path, const char* mountPoint, DirType type)
 {
     switch (type)
     {
-    case DirType::NATIVE: m_Dirs.emplace_back(std::make_unique<NativeVFDirectory>(path, mountPoint)); break;
+    case DirType::NATIVE: s_Dirs.emplace_back(std::make_unique<NativeVFDirectory>(path, mountPoint)); break;
     default: Assert("Unknown DirType!", false);
     }
 }
 
 std::shared_ptr<VFile> VFS::ReadFile(const char* virtualPath)
 {
-    for (const auto& dir : m_Dirs)
+    for (const auto& dir : s_Dirs)
     {
         const char* mountPoint = dir->GetMountPoint();
 
@@ -47,9 +47,9 @@ std::shared_ptr<VFile> VFS::ReadFile(const char* virtualPath)
         }
     }
 
-    if (m_DefaultDir->FileExists(virtualPath))
+    if (s_DefaultDir->FileExists(virtualPath))
     {
-        return m_DefaultDir->OpenFile(virtualPath);
+        return s_DefaultDir->OpenFile(virtualPath);
     }
 
     LogErr(ERROR_INFO, "File dont exist: %s", virtualPath);

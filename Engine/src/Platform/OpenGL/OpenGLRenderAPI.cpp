@@ -101,4 +101,9 @@ std::shared_ptr<Texture> OpenGLRenderAPI::CreateTexture(const char* path)
     return std::make_shared<OpenGLTexture>(path);
 }
 
+RenderAPI::API OpenGLRenderAPI::GetAPI()
+{
+    return RenderAPI::API::OpenGL;
+}
+
 } // namespace aero3d

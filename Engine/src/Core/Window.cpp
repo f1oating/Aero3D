@@ -3,6 +3,7 @@
 #include <memory>
 
 #include "Utils/Log.h"
+#include "Core/Configuration.h"
 
 namespace aero3d {
 
@@ -24,8 +25,8 @@ bool Window::Init(const char* title, int width, int height)
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 
-    s_Window = SDL_CreateWindow(title,
-        width, height,
+    s_Window = SDL_CreateWindow(Configuration::GetValue("WindowTitle").c_str(),
+        std::stoi(Configuration::GetValue("WindowWidth")), std::stoi(Configuration::GetValue("WindowHeight")),
         SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
 
     if (!s_Window) {

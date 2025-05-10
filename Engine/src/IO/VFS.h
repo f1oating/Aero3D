@@ -20,8 +20,8 @@ public:
     static std::shared_ptr<VFile> ReadFile(const char* virtualPath);
 
 private:
-    static std::vector<std::unique_ptr<VFDirectory>> m_Dirs;
-    static std::unique_ptr<VFDirectory> m_DefaultDir;
+    static std::vector<std::unique_ptr<VFDirectory>> s_Dirs;
+    static std::unique_ptr<VFDirectory> s_DefaultDir;
 
 };
 
