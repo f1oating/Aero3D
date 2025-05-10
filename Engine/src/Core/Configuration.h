@@ -1,7 +1,7 @@
 #ifndef AERO3D_CORE_CONFIGURATION_H_
 #define AERO3D_CORE_CONFIGURATION_H_
 
-#include <unordered_map>
+#include <map>
 #include <string>
 #include <memory>
 
@@ -13,14 +13,16 @@ namespace aero3d {
 class Configuration
 {
 public:
-    static bool Init();
-    static void Shutdown();
+    Configuration();
+    ~Configuration();
 
-    static std::string GetValue(std::string key);
+    void Open(const char* path);
+
+    std::string GetValue(std::string key);
 
 private:
-    static std::unordered_map<std::string, std::string> s_ConfigMap;
-    static std::shared_ptr<VFile> s_ConfigFile;
+    std::map<std::string, std::string> m_ConfigMap;
+    std::shared_ptr<VFile> m_ConfigFile;
 
 };
 

@@ -28,7 +28,7 @@ void VFS::Mount(const char* path, const char* mountPoint, DirType type)
     switch (type)
     {
     case DirType::NATIVE: s_Dirs.emplace_back(std::make_unique<NativeVFDirectory>(path, mountPoint)); break;
-    default: Assert("Unknown DirType!", false);
+    default: Assert(ERROR_INFO, false, "Unknown DirType!");
     }
 }
 

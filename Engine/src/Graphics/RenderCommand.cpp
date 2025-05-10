@@ -1,6 +1,6 @@
 #include "Graphics/RenderCommand.h"
 
-#include <string>
+#include <string.h>
 
 #include "Core/Configuration.h"
 #include "Platform/OpenGL/OpenGLRenderAPI.h"
@@ -9,12 +9,10 @@ namespace aero3d {
 
 std::unique_ptr<RenderAPI> RenderCommand::s_API = nullptr;
 
-bool RenderCommand::Init()
+bool RenderCommand::Init(const char* api)
 {
-    std::string api = Configuration::GetValue("RenderAPI");
-
-    if (api == "OpenGL") s_API = std::make_unique<OpenGLRenderAPI>();
-    else Assert("This Rendering API not yet supported.", false);
+    if (strcmp(api, "OpenGL") == 0) s_API = std::make_unique<OpenGLRenderAPI>();
+    else Assert(ERROR_INFO, false, "This Rendering API not yet supported.");
 
     return s_API->Init();
 }

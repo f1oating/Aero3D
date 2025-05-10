@@ -18,7 +18,7 @@ static GLenum IndexTypeToGL(IndexBufferType type)
     case IndexBufferType::UNSIGNED_BYTE: return GL_UNSIGNED_BYTE;
     case IndexBufferType::UNSIGNED_SHORT: return GL_UNSIGNED_SHORT;
     case IndexBufferType::UNSIGNED_INT: return GL_UNSIGNED_INT;
-    default: Assert("This IndexBufferType doesnt exist !", false);
+    default: Assert(ERROR_INFO, false, "This IndexBufferType doesnt exist !");
     }
 }
 

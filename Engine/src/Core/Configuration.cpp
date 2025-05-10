@@ -9,11 +9,8 @@
 
 namespace aero3d {
 
-std::unordered_map<std::string, std::string> Configuration::s_ConfigMap;
-std::shared_ptr<VFile> Configuration::s_ConfigFile = nullptr;
-
-static std::unordered_map<std::string, std::string> parseKeyValueString(const std::string& input) {
-    std::unordered_map<std::string, std::string> result;
+static std::map<std::string, std::string> parseKeyValueString(const std::string& input) {
+    std::map<std::string, std::string> result;
     std::istringstream stream(input);
     std::string line;
 
@@ -31,7 +28,7 @@ static std::unordered_map<std::string, std::string> parseKeyValueString(const st
     return result;
 }
 
-static std::string serializeKeyValueMap(const std::unordered_map<std::string, std::string>& map) {
+static std::string serializeKeyValueMap(const std::map<std::string, std::string>& map) {
     std::ostringstream stream;
 
     for (const auto& [key, value] : map) {
@@ -41,29 +38,28 @@ static std::string serializeKeyValueMap(const std::unordered_map<std::string, st
     return stream.str();
 }
 
-bool Configuration::Init()
+Configuration::Configuration()
+    : m_ConfigFile(nullptr)
 {
-    LogMsg("Configuration Initialize.");
-
-    s_ConfigFile = VFS::ReadFile("res/config.conf");
-    s_ConfigMap = parseKeyValueString(s_ConfigFile->ReadString());
-
-    return true;
 }
 
-void Configuration::Shutdown()
+Configuration::~Configuration()
 {
-    LogMsg("Configuration Shutdown.");
+    std::string str = serializeKeyValueMap(m_ConfigMap);
 
-    std::string str = serializeKeyValueMap(s_ConfigMap);
+    m_ConfigFile->Truncate();
+    m_ConfigFile->WriteBytes((void*)str.c_str(), str.length());
+}
 
-    s_ConfigFile->Truncate();
-    s_ConfigFile->WriteBytes((void*)str.c_str(), str.length());
+void Configuration::Open(const char* path)
+{
+    m_ConfigFile = VFS::ReadFile(path);
+    m_ConfigMap = parseKeyValueString(m_ConfigFile->ReadString());
 }
 
 std::string Configuration::GetValue(std::string key)
 {
-    return s_ConfigMap.at(key);
+    return m_ConfigMap.at(key);
 }
 
 } // namespace aero3d

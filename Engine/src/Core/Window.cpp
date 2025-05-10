@@ -10,7 +10,7 @@ namespace aero3d {
 SDL_Window* Window::s_Window = nullptr;
 std::unique_ptr<GraphicsContext> Window::s_Context = nullptr;
 
-bool Window::Init(const char* title, int width, int height)
+bool Window::Init(const char* title, int width, int height, const char* api)
 {
     LogMsg("Window Initialize.");
 
@@ -25,8 +25,8 @@ bool Window::Init(const char* title, int width, int height)
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 
-    s_Window = SDL_CreateWindow(Configuration::GetValue("WindowTitle").c_str(),
-        std::stoi(Configuration::GetValue("WindowWidth")), std::stoi(Configuration::GetValue("WindowHeight")),
+    s_Window = SDL_CreateWindow(title,
+        width, height,
         SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
 
     if (!s_Window) {
@@ -34,7 +34,7 @@ bool Window::Init(const char* title, int width, int height)
         return false;
     }
 
-    s_Context = GraphicsContext::Create();
+    s_Context = GraphicsContext::Create(api);
     if (!s_Context->Init(s_Window))
     {
         return false;

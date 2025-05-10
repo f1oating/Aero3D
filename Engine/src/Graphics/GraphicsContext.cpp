@@ -1,7 +1,7 @@
 #include "Graphics/GraphicsContext.h"
 
 #include <memory>
-#include <string>
+#include <string.h>
 
 #include "Core/Configuration.h"
 #include "Platform/OpenGL/OpenGLContext.h"
@@ -9,12 +9,10 @@
 
 namespace aero3d {
 
-std::unique_ptr<GraphicsContext> GraphicsContext::Create()
+std::unique_ptr<GraphicsContext> GraphicsContext::Create(const char* api)
 {
-    std::string api = Configuration::GetValue("RenderAPI");
-
-    if (api == "OpenGL") return std::make_unique<OpenGLContext>();
-    else Assert("This Rendering API not yet supported.", false);
+    if (strcmp(api, "OpenGL") == 0) return std::make_unique<OpenGLContext>();
+    else Assert(ERROR_INFO, false, "This Rendering API not yet supported.");
 
     return nullptr;
 }

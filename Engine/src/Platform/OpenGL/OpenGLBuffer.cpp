@@ -24,7 +24,7 @@ static GLenum ToGLType(ElementType type)
     case ElementType::MAT2: return GL_FLOAT;
     case ElementType::MAT3: return GL_FLOAT;
     case ElementType::MAT4: return GL_FLOAT;
-    default: Assert("This ElementType doesnt exist !", false);
+    default: Assert(ERROR_INFO, false, "This ElementType doesnt exist !");
     }
 }
 

@@ -14,7 +14,7 @@ namespace aero3d {
 class RenderCommand
 {
 public:
-    static bool Init();
+    static bool Init(const char* api);
     static void Shutdown();
 
     static void SetViewport(int x, int y, int width, int height);

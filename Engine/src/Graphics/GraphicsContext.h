@@ -17,7 +17,7 @@ public:
 
     virtual void SwapBuffers(SDL_Window* window) = 0;
 
-    static std::unique_ptr<GraphicsContext> Create();
+    static std::unique_ptr<GraphicsContext> Create(const char* api);
 };
 
 } // namespace aero3d

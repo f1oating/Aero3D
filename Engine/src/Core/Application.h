@@ -2,8 +2,17 @@
 #define AERO3D_CORE_APPLICATION_H_
 
 #include "Utils/API.h"
+#include "Core/Configuration.h"
 
 namespace aero3d {
+
+struct ApplicationInfo
+{
+    std::string WindowTitle;
+    int WindowWidth;
+    int WindowHeight;
+    std::string RenderAPI;
+};
 
 class A3D_API Application
 {
@@ -16,6 +25,8 @@ public:
     void Shutdown();
 
 private:
+    Configuration m_Configuration;
+    ApplicationInfo m_ApplicationInfo;
     bool m_IsRunning;
 
 };

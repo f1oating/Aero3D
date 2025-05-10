@@ -13,6 +13,14 @@
 
 namespace aero3d {
 
+static void ParseApplicationInfo(Configuration& conf, ApplicationInfo& applicationInfo)
+{
+    applicationInfo.RenderAPI = conf.GetValue("RenderAPI");
+    applicationInfo.WindowTitle = conf.GetValue("WindowTitle");
+    applicationInfo.WindowHeight = std::stoi(conf.GetValue("WindowHeight"));
+    applicationInfo.WindowWidth = std::stoi(conf.GetValue("WindowWidth"));
+}
+
 Application::Application()
     : m_IsRunning(false)
 {
@@ -31,17 +39,16 @@ bool Application::Init()
         return false;
     }
 
-    if (!Configuration::Init())
+    m_Configuration.Open("res/config.conf");
+    ParseApplicationInfo(m_Configuration, m_ApplicationInfo);
+
+    if (!Window::Init(m_ApplicationInfo.WindowTitle.c_str(), m_ApplicationInfo.WindowWidth,
+        m_ApplicationInfo.WindowHeight, m_ApplicationInfo.RenderAPI.c_str()))
     {
         return false;
     }
 
-    if (!Window::Init("Aero3D", 800, 600))
-    {
-        return false;
-    }
-
-    if (!RenderCommand::Init())
+    if (!RenderCommand::Init(m_ApplicationInfo.RenderAPI.c_str()))
     {
         return false;
     }
@@ -118,7 +125,6 @@ void Application::Shutdown()
 
     RenderCommand::Shutdown();
     Window::Shutdown();
-    Configuration::Shutdown();
     VFS::Shutdown();
 }
 
