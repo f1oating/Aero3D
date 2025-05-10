@@ -21,13 +21,16 @@ project "Engine"
 		"src/Scene/**.cpp",
 		"src/Utils/**.h",
 		"src/Utils/**.cpp",
+		"src/Vendor/**.h",
+		"src/Vendor/**.cpp",
 	}
 
 	includedirs
 	{
 		"src",
+		"src/Vendor",
 		"%{IncludeDir.sdl}",
-		"%{IncludeDir.glad}"
+		"%{IncludeDir.glad}",
 	}
 
 	links

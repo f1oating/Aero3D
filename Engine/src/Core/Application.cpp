@@ -7,7 +7,8 @@
 
 #include "Graphics/Buffer.h"
 #include "Graphics/Shader.h"
-#include "Platform/OpenGL/OpenGLVertexBuffer.h"
+#include "Graphics/ConstantBuffer.h"
+#include "Graphics/Texture.h"
 
 namespace aero3d {
 
@@ -47,9 +48,9 @@ bool Application::Init()
 void Application::Run()
 {
     float vertices[] = {
-        0.0f,  0.5f,
-       -0.5f, -0.5f,
-        0.5f, -0.5f
+        0.0f,  0.5f,   0.5f, 1.0f,
+       -0.5f, -0.5f,   0.0f, 0.0f,
+        0.5f, -0.5f,   1.0f, 0.0f
     };
 
     unsigned int indices[] = {
@@ -57,14 +58,30 @@ void Application::Run()
     };
 
     std::vector<LayoutElement> elements = {
-        { "a_Position", ElementType::FLOAT2 }
+        { "a_Position", ElementType::FLOAT2 },
+        { "a_TexCoord", ElementType::FLOAT2 }
     };
 
     BufferLayout layout(std::move(elements));
-    std::shared_ptr<VertexBuffer> vb = RenderCommand::CreateVertexBuffer(layout, vertices, 6 * 4);
+    std::shared_ptr<VertexBuffer> vb = RenderCommand::CreateVertexBuffer(layout, vertices, 12 * 4);
     std::shared_ptr<IndexBuffer> ib = RenderCommand::CreateIndexBuffer(indices, 12, 3);
 
-    std::shared_ptr<Shader> shader = RenderCommand::CreateShader(L"vertex.glsl", L"pixel.glsl");
+    struct UniformData {
+        float color[3]; 
+        float padding;
+    };
+
+    UniformData data;
+    data.color[0] = 0.2f;
+    data.color[1] = 0.3f;
+    data.color[2] = 0.4f;
+    data.padding = 0.0f;
+
+    std::shared_ptr<Shader> shader = RenderCommand::CreateShader("res/shaders/vertex.glsl", "res/shaders/pixel.glsl");
+    std::shared_ptr<Texture> texture = RenderCommand::CreateTexture("res/textures/texture.jpg");
+    texture->Bind(0);
+
+    std::shared_ptr<ConstantBuffer> cb = RenderCommand::CreateConstantBuffer(&data, sizeof(UniformData));
 
     RenderCommand::SetViewport(0, 0, 800, 600);
     RenderCommand::SetClearColor(0.2f, 0.3f, 0.2f, 1.0f);
@@ -75,6 +92,13 @@ void Application::Run()
         RenderCommand::Clear();
 
         shader->Bind();
+        cb->Bind(0);
+
+        data.color[0] = static_cast<float>(rand()) / RAND_MAX;
+        data.color[1] = static_cast<float>(rand()) / RAND_MAX;
+        data.color[2] = static_cast<float>(rand()) / RAND_MAX;
+
+        cb->SetData(&data, sizeof(UniformData));
         RenderCommand::DrawIndexed(vb, ib);
         shader->Unbind();
 

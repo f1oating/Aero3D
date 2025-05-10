@@ -4,7 +4,9 @@
 #include <memory>
 
 #include "Graphics/Buffer.h"
+#include "Graphics/ConstantBuffer.h"
 #include "Graphics/Shader.h"
+#include "Graphics/Texture.h"
 
 namespace aero3d {
 
@@ -36,8 +38,10 @@ public:
 
     virtual std::shared_ptr<VertexBuffer> CreateVertexBuffer(BufferLayout& layout, const void* data, size_t size) = 0;
     virtual std::shared_ptr<IndexBuffer> CreateIndexBuffer(const void* data, size_t size, size_t count) = 0;
+    virtual std::shared_ptr<ConstantBuffer> CreateConstantBuffer(const void* data, size_t size) = 0;
 
-    virtual std::shared_ptr<Shader> CreateShader(std::wstring& vertexPath, std::wstring& pixelPath) = 0;
+    virtual std::shared_ptr<Shader> CreateShader(const char* vertexPath, const char* pixelPath) = 0;
+    virtual std::shared_ptr<Texture> CreateTexture(const char* path) = 0;
 
     API GetAPI() { return m_API; }
 

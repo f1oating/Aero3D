@@ -1,51 +1,44 @@
 #include "Utils/StringManip.h"
 
+#include <string>
 #include <string.h>
 
 namespace aero3d {
 
-const char* GetPathAfter(const char* path, const char* after)
+std::string GetPathAfter(const char* path, const char* after)
 {
     const char* found = strstr(path, after);
-    if (found != NULL)
+    if (found != nullptr)
     {
-        return found + strlen(after);
+        return std::string(found + strlen(after));
     }
-    return path;
+    return std::string(path);
 }
 
-const char* ExtractClassAndFunctionName(const char* prettyFunctionName)
+std::string ExtractClassAndFunctionName(const char* prettyFunctionName)
 {
     const char* paramsPos = strchr(prettyFunctionName, '(');
     size_t length = strlen(prettyFunctionName);
 
-    if (paramsPos != NULL)
+    if (paramsPos != nullptr)
     {
         length = paramsPos - prettyFunctionName;
     }
 
-    char* result = (char*)malloc(length + 1);
+    std::string temp(prettyFunctionName, length);
 
-    if (result == NULL)
+    size_t spacePos = temp.rfind(' ');
+    if (spacePos != std::string::npos)
     {
-        return NULL;
+        return temp.substr(spacePos + 1);
     }
 
-    if (strncpy_s(result, length + 1, prettyFunctionName, length) != 0)
-    {
-        free(result);
-        return NULL;
-    }
+    return temp;
+}
 
-    result[length] = '\0';
-
-    const char* spacePos = strrchr(result, ' ');
-    if (spacePos != NULL)
-    {
-        memmove(result, spacePos + 1, strlen(spacePos));
-    }
-
-    return result;
+std::string ConcatStrings(const char* str1, const char* str2)
+{
+    return std::string(str1) + str2;
 }
 
 } // namespace aero3d

@@ -2,12 +2,15 @@
 
 #include <Windows.h>
 #include <memory>
+#include <string.h>
 
 #include "IO/NativeVFile.h"
+#include "Utils/StringManip.h"
+#include "Utils/Log.h"
 
 namespace aero3d {
 
-NativeVFDirectory::NativeVFDirectory(const std::wstring& path, const std::wstring& mountPoint)
+NativeVFDirectory::NativeVFDirectory(const char* path, const char* mountPoint)
 {
     m_Path = path;
     m_MountPoint = mountPoint;
@@ -17,12 +20,12 @@ NativeVFDirectory::~NativeVFDirectory()
 {
 }
 
-std::shared_ptr<VFile> NativeVFDirectory::OpenFile(std::wstring path)
+std::shared_ptr<VFile> NativeVFDirectory::OpenFile(const char* path)
 {
-    std::wstring fileRelativePath = path.substr(m_MountPoint.length());
-    std::wstring filePath = m_Path + fileRelativePath;
+    const char* fileRelativePath = path + strlen(m_MountPoint);
+    std::string filePath = ConcatStrings(m_Path, fileRelativePath);
 
-    HANDLE fileHandle = CreateFileW(
+    HANDLE fileHandle = CreateFileA(
         filePath.c_str(),
         GENERIC_READ,
         FILE_SHARE_READ,
@@ -32,13 +35,19 @@ std::shared_ptr<VFile> NativeVFDirectory::OpenFile(std::wstring path)
         nullptr
     );
 
+    if (fileHandle == INVALID_HANDLE_VALUE)
+    {
+        LogErr(ERROR_INFO, "Failed to open file: %s", path);
+        return nullptr;
+    }
+
     return std::make_shared<NativeVFile>(fileHandle);
 }
 
-std::vector<std::wstring> NativeVFDirectory::ListFiles()
+bool NativeVFDirectory::FileExists(const char* path)
 {
-    std::vector<std::wstring> v;
-    return v;
+    DWORD attrs = GetFileAttributesA(path);
+    return (attrs != INVALID_FILE_ATTRIBUTES) && !(attrs & FILE_ATTRIBUTE_DIRECTORY);
 }
 
 } // namespace aero3d

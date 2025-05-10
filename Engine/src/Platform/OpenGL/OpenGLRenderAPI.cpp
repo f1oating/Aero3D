@@ -4,9 +4,10 @@
 
 #include "Utils/Log.h"
 #include "Utils/Assert.h"
-#include "Platform/OpenGL/OpenGLVertexBuffer.h"
-#include "Platform/OpenGL/OpenGLIndexBuffer.h"
+#include "Platform/OpenGL/OpenGLBuffer.h"
 #include "Platform/OpenGL/OpenGLShader.h"
+#include "Platform/OpenGL/OpenGLConstantBuffer.h"
+#include "Platform/OpenGL/OpenGLTexture.h"
 
 namespace aero3d {
 
@@ -85,9 +86,19 @@ std::shared_ptr<IndexBuffer> OpenGLRenderAPI::CreateIndexBuffer(const void* data
     return std::make_shared<OpenGLIndexBuffer>(data, size, count);
 }
 
-std::shared_ptr<Shader> OpenGLRenderAPI::CreateShader(std::wstring& vertexPath, std::wstring& pixelPath)
+std::shared_ptr<ConstantBuffer> OpenGLRenderAPI::CreateConstantBuffer(const void* data, size_t size)
+{
+    return std::make_shared<OpenGLConstantBuffer>(data, size);
+}
+
+std::shared_ptr<Shader> OpenGLRenderAPI::CreateShader(const char* vertexPath, const char* pixelPath)
 {
     return std::make_shared<OpenGLShader>(vertexPath, pixelPath);
+}
+
+std::shared_ptr<Texture> OpenGLRenderAPI::CreateTexture(const char* path)
+{
+    return std::make_shared<OpenGLTexture>(path);
 }
 
 } // namespace aero3d
