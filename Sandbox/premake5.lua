@@ -7,7 +7,7 @@ project "Sandbox"
     targetdir ("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")
     objdir ("%{wks.location}/bin-int/" .. outputdir .. "/%{prj.name}")
 
-    debugdir "%{WindowsDllDir}"
+    debugdir "%{wks.location}/%{prj.name}"
 
     files
     {
@@ -32,6 +32,10 @@ project "Sandbox"
         defines
         {
             "A3D_PLATFORM_WINDOWS"
+        }
+
+        postbuildcommands {
+            "{COPY} %{WindowsDllDir}/*.dll %{wks.location}/%{prj.name}"
         }
 
     filter "configurations:Debug"

@@ -8,6 +8,7 @@
 #include "Graphics/Buffer.h"
 #include "Graphics/Shader.h"
 #include "Graphics/ConstantBuffer.h"
+#include "Graphics/Texture.h"
 
 namespace aero3d {
 
@@ -47,9 +48,9 @@ bool Application::Init()
 void Application::Run()
 {
     float vertices[] = {
-        0.0f,  0.5f,
-       -0.5f, -0.5f,
-        0.5f, -0.5f
+        0.0f,  0.5f,   0.5f, 1.0f,
+       -0.5f, -0.5f,   0.0f, 0.0f,
+        0.5f, -0.5f,   1.0f, 0.0f
     };
 
     unsigned int indices[] = {
@@ -57,11 +58,12 @@ void Application::Run()
     };
 
     std::vector<LayoutElement> elements = {
-        { "a_Position", ElementType::FLOAT2 }
+        { "a_Position", ElementType::FLOAT2 },
+        { "a_TexCoord", ElementType::FLOAT2 }
     };
 
     BufferLayout layout(std::move(elements));
-    std::shared_ptr<VertexBuffer> vb = RenderCommand::CreateVertexBuffer(layout, vertices, 6 * 4);
+    std::shared_ptr<VertexBuffer> vb = RenderCommand::CreateVertexBuffer(layout, vertices, 12 * 4);
     std::shared_ptr<IndexBuffer> ib = RenderCommand::CreateIndexBuffer(indices, 12, 3);
 
     struct UniformData {
@@ -75,7 +77,9 @@ void Application::Run()
     data.color[2] = 0.4f;
     data.padding = 0.0f;
 
-    std::shared_ptr<Shader> shader = RenderCommand::CreateShader("vertex.glsl", "pixel.glsl");
+    std::shared_ptr<Shader> shader = RenderCommand::CreateShader("res/shaders/vertex.glsl", "res/shaders/pixel.glsl");
+    std::shared_ptr<Texture> texture = RenderCommand::CreateTexture("res/textures/texture.jpg");
+    texture->Bind(0);
 
     std::shared_ptr<ConstantBuffer> cb = RenderCommand::CreateConstantBuffer(&data, sizeof(UniformData));
 

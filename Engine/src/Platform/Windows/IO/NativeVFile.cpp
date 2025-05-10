@@ -39,7 +39,7 @@ static const char* GetFileNameOnlyFromHandle(HANDLE hFile)
 }
 
 NativeVFile::NativeVFile(void* handle)
-    : m_Handle(handle)
+    : m_Handle(handle), m_Data(nullptr)
 {
     LARGE_INTEGER size;
     GetFileSizeEx(m_Handle, &size);
@@ -51,6 +51,7 @@ NativeVFile::NativeVFile(void* handle)
 NativeVFile::~NativeVFile()
 {
     CloseHandle(m_Handle);
+    if (m_Data) delete m_Data;
 }
 
 void NativeVFile::ReadBytes(void* buffer, size_t size, size_t start)
@@ -75,6 +76,23 @@ std::string NativeVFile::ReadString()
         return "";
 
     return result;
+}
+
+void NativeVFile::Load()
+{
+    m_Data = new byte[m_Length];
+    ReadBytes(m_Data, m_Length, 0);
+}
+
+void NativeVFile::Unload()
+{
+    delete m_Data;
+    m_Data = nullptr;
+}
+
+void* NativeVFile::GetData()
+{
+    return m_Data;
 }
 
 uint64_t NativeVFile::GetLength() const

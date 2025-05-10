@@ -62,4 +62,9 @@ std::shared_ptr<Shader> RenderCommand::CreateShader(const char* vertexPath, cons
     return m_API->CreateShader(vertexPath, pixelPath);
 }
 
+std::shared_ptr<Texture> RenderCommand::CreateTexture(const char* path)
+{
+    return m_API->CreateTexture(path);
+}
+
 } // namespace aero3d

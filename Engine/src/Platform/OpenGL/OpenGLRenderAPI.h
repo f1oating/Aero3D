@@ -27,6 +27,7 @@ public:
     virtual std::shared_ptr<ConstantBuffer> CreateConstantBuffer(const void* data, size_t size) override;
 
     virtual std::shared_ptr<Shader> CreateShader(const char* vertexPath, const char* pixelPath) override;
+    virtual std::shared_ptr<Texture> CreateTexture(const char* path) override;
 
 };
 

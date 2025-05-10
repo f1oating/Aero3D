@@ -7,6 +7,7 @@
 #include "Platform/OpenGL/OpenGLBuffer.h"
 #include "Platform/OpenGL/OpenGLShader.h"
 #include "Platform/OpenGL/OpenGLConstantBuffer.h"
+#include "Platform/OpenGL/OpenGLTexture.h"
 
 namespace aero3d {
 
@@ -93,6 +94,11 @@ std::shared_ptr<ConstantBuffer> OpenGLRenderAPI::CreateConstantBuffer(const void
 std::shared_ptr<Shader> OpenGLRenderAPI::CreateShader(const char* vertexPath, const char* pixelPath)
 {
     return std::make_shared<OpenGLShader>(vertexPath, pixelPath);
+}
+
+std::shared_ptr<Texture> OpenGLRenderAPI::CreateTexture(const char* path)
+{
+    return std::make_shared<OpenGLTexture>(path);
 }
 
 } // namespace aero3d
