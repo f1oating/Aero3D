@@ -150,6 +150,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Core\Application.h" />
+    <ClInclude Include="src\Core\Configuration.h" />
     <ClInclude Include="src\Core\Window.h" />
     <ClInclude Include="src\Graphics\Buffer.h" />
     <ClInclude Include="src\Graphics\ConstantBuffer.h" />
@@ -177,6 +178,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp" />
+    <ClCompile Include="src\Core\Configuration.cpp" />
     <ClCompile Include="src\Core\Window.cpp" />
     <ClCompile Include="src\Graphics\GraphicsContext.cpp" />
     <ClCompile Include="src\Graphics\RenderCommand.cpp" />

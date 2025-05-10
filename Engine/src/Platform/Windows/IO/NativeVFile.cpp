@@ -78,6 +78,34 @@ std::string NativeVFile::ReadString()
     return result;
 }
 
+void NativeVFile::Truncate(size_t pos)
+{
+    LARGE_INTEGER li;
+    li.QuadPart = static_cast<LONGLONG>(pos);
+    if (!SetFilePointerEx(m_Handle, li, nullptr, FILE_BEGIN))
+        return;
+
+    SetEndOfFile(m_Handle);
+
+    m_Length = pos;
+}
+
+void NativeVFile::WriteBytes(void* data, size_t size, size_t start)
+{
+    LARGE_INTEGER li;
+    li.QuadPart = static_cast<LONGLONG>(start);
+    if (!SetFilePointerEx(m_Handle, li, nullptr, FILE_BEGIN))
+        return;
+
+    DWORD bytesWritten = 0;
+    if (!WriteFile(m_Handle, data, static_cast<DWORD>(size), &bytesWritten, nullptr))
+        return;
+
+    if (start + bytesWritten > m_Length) {
+        m_Length = start + bytesWritten;
+    }
+}
+
 void NativeVFile::Load()
 {
     m_Data = new byte[m_Length];
@@ -88,6 +116,11 @@ void NativeVFile::Unload()
 {
     delete m_Data;
     m_Data = nullptr;
+}
+
+bool NativeVFile::IsWritable()
+{
+    return true;
 }
 
 void* NativeVFile::GetData()

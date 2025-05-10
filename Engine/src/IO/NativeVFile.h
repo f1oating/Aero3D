@@ -16,8 +16,13 @@ public:
     virtual void ReadBytes(void* buffer, size_t size, size_t start = 0) override;
     virtual std::string ReadString() override;
 
+    virtual void Truncate(size_t pos = 0) override;
+    virtual void WriteBytes(void* data, size_t size, size_t start = 0) override;
+
     virtual void Load() override;
     virtual void Unload() override;
+
+    virtual bool IsWritable() override;
 
     virtual void* GetData() override;
 

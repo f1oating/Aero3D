@@ -3,6 +3,7 @@
 #include "Utils/Log.h"
 #include "Core/Window.h"
 #include "IO/VFS.h"
+#include "Core/Configuration.h"
 #include "Graphics/RenderCommand.h"
 
 #include "Graphics/Buffer.h"
@@ -25,12 +26,17 @@ bool Application::Init()
 {
     LogMsg("Application Initialize.");
 
-    if (!Window::Init("Aero3D", 800, 600))
+    if (!VFS::Init())
     {
         return false;
     }
 
-    if (!VFS::Init())
+    if (!Configuration::Init())
+    {
+        return false;
+    }
+
+    if (!Window::Init("Aero3D", 800, 600))
     {
         return false;
     }
@@ -111,8 +117,9 @@ void Application::Shutdown()
     LogMsg("Application Shutdown.");
 
     RenderCommand::Shutdown();
-    VFS::Shutdown();
     Window::Shutdown();
+    Configuration::Shutdown();
+    VFS::Shutdown();
 }
 
 } // namespace aero3d

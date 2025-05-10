@@ -27,7 +27,7 @@ std::shared_ptr<VFile> NativeVFDirectory::OpenFile(const char* path)
 
     HANDLE fileHandle = CreateFileA(
         filePath.c_str(),
-        GENERIC_READ,
+        GENERIC_READ | GENERIC_WRITE,
         FILE_SHARE_READ,
         nullptr,
         OPEN_EXISTING,
