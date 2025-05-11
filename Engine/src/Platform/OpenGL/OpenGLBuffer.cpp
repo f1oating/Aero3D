@@ -24,7 +24,7 @@ static GLenum ToGLType(ElementType type)
     case ElementType::MAT2: return GL_FLOAT;
     case ElementType::MAT3: return GL_FLOAT;
     case ElementType::MAT4: return GL_FLOAT;
-    default: Assert(ERROR_INFO, false, "This ElementType doesnt exist !");
+    default: Assert(ERROR_INFO, false, "This ElementType doesnt exist !"); return GL_NONE;
     }
 }
 
@@ -41,8 +41,10 @@ OpenGLVertexBuffer::OpenGLVertexBuffer(BufferLayout& layout, const void* data, s
     auto elements = layout.GetElements();
     for (size_t i = 0; i < elements.size(); ++i)
     {
-        glVertexAttribPointer(i, elements[i].GetComponentCount(), ToGLType(elements[i].Type), GL_FALSE, layout.GetStride(), (const void*)elements[i].Offset);
-        glEnableVertexAttribArray(i);
+        glVertexAttribPointer(static_cast<GLsizei>(i), elements[i].GetComponentCount(),
+            static_cast<GLsizei>(ToGLType(elements[i].Type)),
+            GL_FALSE, layout.GetStride(), (const void*)elements[i].Offset);
+        glEnableVertexAttribArray(static_cast<GLuint>(i));
     }
 
     glBindVertexArray(0);

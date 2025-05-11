@@ -25,7 +25,8 @@ OpenGLTexture::OpenGLTexture(std::string& path)
     file->Load();
 
     int width, height, nrChannels;
-    unsigned char* data = stbi_load_from_memory(static_cast<const stbi_uc*>(file->GetData()), file->GetLength(), &width, &height, &nrChannels, 0);
+    unsigned char* data = stbi_load_from_memory(static_cast<const stbi_uc*>(file->GetData()), 
+        static_cast<int>(file->GetLength()), &width, &height, &nrChannels, 0);
 
     if (data) {
         GLenum format = (nrChannels == 3) ? GL_RGB : GL_RGBA;

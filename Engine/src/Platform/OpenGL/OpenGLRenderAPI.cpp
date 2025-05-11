@@ -18,7 +18,7 @@ static GLenum IndexTypeToGL(IndexBufferType type)
     case IndexBufferType::UNSIGNED_BYTE: return GL_UNSIGNED_BYTE;
     case IndexBufferType::UNSIGNED_SHORT: return GL_UNSIGNED_SHORT;
     case IndexBufferType::UNSIGNED_INT: return GL_UNSIGNED_INT;
-    default: Assert(ERROR_INFO, false, "This IndexBufferType doesnt exist !");
+    default: Assert(ERROR_INFO, false, "This IndexBufferType doesnt exist !"); return GL_NONE;
     }
 }
 
@@ -66,14 +66,15 @@ void OpenGLRenderAPI::Clear()
 void OpenGLRenderAPI::Draw(std::shared_ptr<VertexBuffer> vb, size_t count)
 {
     vb->Bind();
-    glDrawArrays(GL_TRIANGLES, 0, count);
+    glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(count));
 }
 
 void OpenGLRenderAPI::DrawIndexed(std::shared_ptr<VertexBuffer> vb, std::shared_ptr<IndexBuffer> ib)
 {
     vb->Bind();
     ib->Bind();
-    glDrawElements(GL_TRIANGLES, ib->GetIndexCount(), IndexTypeToGL(ib->GetIndexBufferType()), nullptr);
+    glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(ib->GetIndexCount()),
+        IndexTypeToGL(ib->GetIndexBufferType()), nullptr);
 }
 
 std::shared_ptr<VertexBuffer> OpenGLRenderAPI::CreateVertexBuffer(BufferLayout& layout, const void* data, size_t size)

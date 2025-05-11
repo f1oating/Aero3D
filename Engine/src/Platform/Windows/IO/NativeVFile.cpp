@@ -86,7 +86,7 @@ void NativeVFile::ReadBytes(void* buffer, size_t size, size_t start)
     li.QuadPart = static_cast<LONGLONG>(start);
     SetFilePointerEx(m_Handle, li, nullptr, FILE_BEGIN);
 
-    if (!ReadFile(m_Handle, buffer, size, nullptr, nullptr))
+    if (!ReadFile(m_Handle, buffer, static_cast<DWORD>(size), nullptr, nullptr))
         LogErr(ERROR_INFO, "Failed to read bytes from file: %s", m_Name.c_str());
 }
 
