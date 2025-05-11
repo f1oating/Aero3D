@@ -2,7 +2,6 @@
 #define AERO3D_CORE_APPLICATION_H_
 
 #include "Utils/API.h"
-#include "Core/Configuration.h"
 
 namespace aero3d {
 

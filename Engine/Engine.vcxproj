@@ -152,6 +152,8 @@
     <ClInclude Include="src\Core\Application.h" />
     <ClInclude Include="src\Core\Configuration.h" />
     <ClInclude Include="src\Core\Window.h" />
+    <ClInclude Include="src\EventSystem\Events\Event.h" />
+    <ClInclude Include="src\EventSystem\EventBus.h" />
     <ClInclude Include="src\Graphics\Buffer.h" />
     <ClInclude Include="src\Graphics\ConstantBuffer.h" />
     <ClInclude Include="src\Graphics\GraphicsContext.h" />
@@ -180,6 +182,7 @@
     <ClCompile Include="src\Core\Application.cpp" />
     <ClCompile Include="src\Core\Configuration.cpp" />
     <ClCompile Include="src\Core\Window.cpp" />
+    <ClCompile Include="src\EventSystem\EventBus.cpp" />
     <ClCompile Include="src\Graphics\GraphicsContext.cpp" />
     <ClCompile Include="src\Graphics\RenderCommand.cpp" />
     <ClCompile Include="src\IO\VFS.cpp" />

@@ -3,7 +3,6 @@
 #include <memory>
 
 #include "Utils/Log.h"
-#include "Core/Configuration.h"
 
 namespace aero3d {
 

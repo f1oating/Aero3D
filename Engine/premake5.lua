@@ -11,6 +11,8 @@ project "Engine"
 	{
 		"src/Core/**.h",
 		"src/Core/**.cpp",
+		"src/EventSystem/**.h",
+		"src/EventSystem/**.cpp",
 		"src/Graphics/**.h",
 		"src/Graphics/**.cpp",
 		"src/Platform/OpenGL/**.h",

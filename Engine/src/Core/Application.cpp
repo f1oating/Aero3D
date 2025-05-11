@@ -3,8 +3,8 @@
 #include "Utils/Log.h"
 #include "Core/Window.h"
 #include "IO/VFS.h"
-#include "Core/Configuration.h"
 #include "Graphics/RenderCommand.h"
+#include "EventSystem/EventBus.h"
 
 #include "Graphics/Buffer.h"
 #include "Graphics/Shader.h"
@@ -31,6 +31,11 @@ bool Application::Init()
         return false;
     }
 
+    if (!EventBus::Init())
+    {
+        return false;
+    }
+
     if (!Window::Init("Aero3D", 800,
         600, "OpenGL"))
     {
@@ -49,6 +54,14 @@ bool Application::Init()
 
 void Application::Run()
 {
+    EventBus::Subscribe(typeid(MyEvent), [](Event& event) {
+        MyEvent& myEvent = static_cast<MyEvent&>(event);
+        LogMsg("Event triggered with value: %d", myEvent.value);
+    });
+
+    MyEvent event(42);
+    EventBus::Publish(event);
+
     float vertices[] = {
         0.0f,  0.5f,   0.5f, 1.0f,
        -0.5f, -0.5f,   0.0f, 0.0f,
@@ -114,6 +127,7 @@ void Application::Shutdown()
 
     RenderCommand::Shutdown();
     Window::Shutdown();
+    EventBus::Shutdown();
     VFS::Shutdown();
 }
 
