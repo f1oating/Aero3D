@@ -20,6 +20,7 @@ public:
     virtual void Unload() = 0;
 
     virtual bool IsWritable() = 0;
+    virtual bool IsOpened() = 0;
 
     virtual void* GetData() = 0;
 

@@ -34,7 +34,7 @@ OpenGLTexture::OpenGLTexture(std::string& path)
         glGenerateMipmap(GL_TEXTURE_2D);
     }
     else {
-        LogErr(ERROR_INFO, "Failed to load texture: %s", path);
+        LogErr(ERROR_INFO, "Failed to load texture: %s", path.c_str());
     }
 
     file->Unload();

@@ -23,6 +23,7 @@ public:
     virtual void Unload() override;
 
     virtual bool IsWritable() override;
+    virtual bool IsOpened() override;
 
     virtual void* GetData() override;
 
@@ -34,6 +35,7 @@ private:
     std::string m_Name;
     void* m_Handle;
     void* m_Data;
+    bool m_Opened;
 
 };
 
