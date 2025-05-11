@@ -9,7 +9,7 @@
 
 namespace aero3d {
 
-OpenGLShader::OpenGLShader(const char* vertexPath, const char* pixelPath)
+OpenGLShader::OpenGLShader(std::string& vertexPath, std::string& pixelPath)
 {
     std::string vertexShaderSource = VFS::ReadFile(vertexPath)->ReadString();
     std::string pixelShaderSource = VFS::ReadFile(pixelPath)->ReadString();

@@ -4,7 +4,7 @@
 
 namespace aero3d {
 
-static const char* GetFileNameOnlyFromHandle(HANDLE hFile)
+static std::string GetFileNameOnlyFromHandle(HANDLE hFile)
 {
     char buffer[MAX_PATH];
     DWORD result = GetFinalPathNameByHandleA(
@@ -50,8 +50,10 @@ NativeVFile::NativeVFile(void* handle)
 
 NativeVFile::~NativeVFile()
 {
-    CloseHandle(m_Handle);
-    if (m_Data) delete m_Data;
+    if (m_Handle && m_Handle != INVALID_HANDLE_VALUE)
+        CloseHandle(m_Handle);
+
+    if (m_Data) delete[] m_Data;
 }
 
 void NativeVFile::ReadBytes(void* buffer, size_t size, size_t start)
@@ -133,7 +135,7 @@ uint64_t NativeVFile::GetLength() const
     return m_Length;
 }
 
-const char* NativeVFile::GetName() const
+const std::string& NativeVFile::GetName() const
 {
     return m_Name;
 }

@@ -16,7 +16,7 @@ public:
     Configuration();
     ~Configuration();
 
-    void Open(const char* path);
+    void Open(std::string path);
 
     std::string GetValue(std::string key);
 

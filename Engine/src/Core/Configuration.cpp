@@ -51,7 +51,7 @@ Configuration::~Configuration()
     m_ConfigFile->WriteBytes((void*)str.c_str(), str.length());
 }
 
-void Configuration::Open(const char* path)
+void Configuration::Open(std::string path)
 {
     m_ConfigFile = VFS::ReadFile(path);
     m_ConfigMap = parseKeyValueString(m_ConfigFile->ReadString());

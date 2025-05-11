@@ -11,7 +11,7 @@
 
 namespace aero3d {
 
-OpenGLTexture::OpenGLTexture(const char* path)
+OpenGLTexture::OpenGLTexture(std::string& path)
 {
     glGenTextures(1, &m_TextureID);
     glBindTexture(GL_TEXTURE_2D, m_TextureID);

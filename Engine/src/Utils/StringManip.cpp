@@ -1,7 +1,6 @@
 #include "Utils/StringManip.h"
 
 #include <string>
-#include <string.h>
 
 namespace aero3d {
 
@@ -34,11 +33,6 @@ std::string ExtractClassAndFunctionName(const char* prettyFunctionName)
     }
 
     return temp;
-}
-
-std::string ConcatStrings(const char* str1, const char* str2)
-{
-    return std::string(str1) + str2;
 }
 
 } // namespace aero3d

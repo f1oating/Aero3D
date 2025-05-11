@@ -10,7 +10,7 @@
 
 namespace aero3d {
 
-NativeVFDirectory::NativeVFDirectory(const char* path, const char* mountPoint)
+NativeVFDirectory::NativeVFDirectory(std::string path, std::string mountPoint)
 {
     m_Path = path;
     m_MountPoint = mountPoint;
@@ -20,10 +20,10 @@ NativeVFDirectory::~NativeVFDirectory()
 {
 }
 
-std::shared_ptr<VFile> NativeVFDirectory::OpenFile(const char* path)
+std::shared_ptr<VFile> NativeVFDirectory::OpenFile(std::string& path)
 {
-    const char* fileRelativePath = path + strlen(m_MountPoint);
-    std::string filePath = ConcatStrings(m_Path, fileRelativePath);
+    std::string fileRelativePath = path.substr(m_MountPoint.size());
+    std::string filePath = m_Path + fileRelativePath;
 
     HANDLE fileHandle = CreateFileA(
         filePath.c_str(),
@@ -44,9 +44,9 @@ std::shared_ptr<VFile> NativeVFDirectory::OpenFile(const char* path)
     return std::make_shared<NativeVFile>(fileHandle);
 }
 
-bool NativeVFDirectory::FileExists(const char* path)
+bool NativeVFDirectory::FileExists(std::string& path)
 {
-    DWORD attrs = GetFileAttributesA(path);
+    DWORD attrs = GetFileAttributesA(path.c_str());
     return (attrs != INVALID_FILE_ATTRIBUTES) && !(attrs & FILE_ATTRIBUTE_DIRECTORY);
 }
 

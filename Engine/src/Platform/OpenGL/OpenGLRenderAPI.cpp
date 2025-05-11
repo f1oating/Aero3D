@@ -91,12 +91,12 @@ std::shared_ptr<ConstantBuffer> OpenGLRenderAPI::CreateConstantBuffer(const void
     return std::make_shared<OpenGLConstantBuffer>(data, size);
 }
 
-std::shared_ptr<Shader> OpenGLRenderAPI::CreateShader(const char* vertexPath, const char* pixelPath)
+std::shared_ptr<Shader> OpenGLRenderAPI::CreateShader(std::string& vertexPath, std::string& pixelPath)
 {
     return std::make_shared<OpenGLShader>(vertexPath, pixelPath);
 }
 
-std::shared_ptr<Texture> OpenGLRenderAPI::CreateTexture(const char* path)
+std::shared_ptr<Texture> OpenGLRenderAPI::CreateTexture(std::string& path)
 {
     return std::make_shared<OpenGLTexture>(path);
 }

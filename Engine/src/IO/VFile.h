@@ -24,7 +24,7 @@ public:
     virtual void* GetData() = 0;
 
     virtual uint64_t GetLength() const = 0;
-    virtual const char* GetName() const = 0;
+    virtual const std::string& GetName() const = 0;
 
 };
 
