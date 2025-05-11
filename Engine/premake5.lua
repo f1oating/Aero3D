@@ -31,6 +31,7 @@ project "Engine"
 		"src/Vendor",
 		"%{IncludeDir.sdl}",
 		"%{IncludeDir.glad}",
+		"%{IncludeDir.glm}",
 	}
 
 	links
