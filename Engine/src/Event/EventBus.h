@@ -6,7 +6,7 @@
 #include <unordered_map>
 #include <typeindex>
 
-#include "EventSystem/Events/Event.h"
+#include "Event/Events.h"
 
 namespace aero3d {
 
@@ -23,7 +23,7 @@ public:
     static void Publish(Event& event);
 
 private:
-    static std::unordered_map<std::type_index, std::vector<std::function<void(Event&)>>> m_Listeners;
+    static std::unordered_map<std::type_index, std::vector<std::function<void(Event&)>>> s_Listeners;
 
 };
 

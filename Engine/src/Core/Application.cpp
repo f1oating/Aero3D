@@ -4,7 +4,7 @@
 #include "Core/Window.h"
 #include "IO/VFS.h"
 #include "Graphics/RenderCommand.h"
-#include "EventSystem/EventBus.h"
+#include "Event/EventBus.h"
 
 #include "Graphics/Buffer.h"
 #include "Graphics/Shader.h"
@@ -14,7 +14,7 @@
 namespace aero3d {
 
 Application::Application()
-    : m_IsRunning(false)
+    : m_IsRunning(false), m_Minimized(false)
 {
 }
 
@@ -47,6 +47,8 @@ bool Application::Init()
         return false;
     }
 
+    SubscribeOnEvents();
+
     m_IsRunning = true;
 
     return true;
@@ -54,14 +56,6 @@ bool Application::Init()
 
 void Application::Run()
 {
-    EventBus::Subscribe(typeid(MyEvent), [](Event& event) {
-        MyEvent& myEvent = static_cast<MyEvent&>(event);
-        LogMsg("Event triggered with value: %d", myEvent.value);
-    });
-
-    MyEvent event(42);
-    EventBus::Publish(event);
-
     float vertices[] = {
         0.0f,  0.5f,   0.5f, 1.0f,
        -0.5f, -0.5f,   0.0f, 0.0f,
@@ -103,19 +97,23 @@ void Application::Run()
 
     while (m_IsRunning)
     {
-        Window::PollEvents(m_IsRunning);
-        RenderCommand::Clear();
+        Window::PollEvents(m_IsRunning, m_Minimized);
 
-        shader->Bind();
-        cb->Bind(0);
+        if (!m_Minimized)
+        {
+            RenderCommand::Clear();
 
-        data.color[0] = static_cast<float>(rand()) / RAND_MAX;
-        data.color[1] = static_cast<float>(rand()) / RAND_MAX;
-        data.color[2] = static_cast<float>(rand()) / RAND_MAX;
+            shader->Bind();
+            cb->Bind(0);
 
-        cb->SetData(&data, sizeof(UniformData));
-        RenderCommand::DrawIndexed(vb, ib);
-        shader->Unbind();
+            data.color[0] = static_cast<float>(rand()) / RAND_MAX;
+            data.color[1] = static_cast<float>(rand()) / RAND_MAX;
+            data.color[2] = static_cast<float>(rand()) / RAND_MAX;
+
+            cb->SetData(&data, sizeof(UniformData));
+            RenderCommand::DrawIndexed(vb, ib);
+            shader->Unbind();
+        }
 
         Window::SwapBuffers();
     }
@@ -129,6 +127,18 @@ void Application::Shutdown()
     Window::Shutdown();
     EventBus::Shutdown();
     VFS::Shutdown();
+}
+
+void Application::SubscribeOnEvents()
+{
+    EventBus::Subscribe(typeid(WindowResizeEvent), [&](Event& event) {
+        WindowResizeEvent& windowResizeEvent = static_cast<WindowResizeEvent&>(event);
+
+        int width = std::max(1, windowResizeEvent.GetWidth());
+        int height = std::max(1, windowResizeEvent.GetHeight());
+
+        RenderCommand::SetViewport(0, 0, width, height);
+    });
 }
 
 } // namespace aero3d

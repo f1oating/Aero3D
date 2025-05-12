@@ -3,6 +3,7 @@
 #include <memory>
 
 #include "Utils/Log.h"
+#include "Event/EventBus.h"
 
 namespace aero3d {
 
@@ -55,12 +56,36 @@ void Window::Shutdown()
     SDL_QuitSubSystem(SDL_INIT_VIDEO);
 }
 
-void Window::PollEvents(bool& running)
+void Window::PollEvents(bool& running, bool& minimized)
 {
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
-        if (event.type == SDL_EVENT_QUIT) {
+        switch (event.type) {
+        case SDL_EVENT_QUIT:
+        {
             running = false;
+            break;
+        }
+        case SDL_EVENT_WINDOW_MINIMIZED:
+        {
+            minimized = true;
+            break;
+        }
+        case SDL_EVENT_WINDOW_RESTORED:
+        {
+            minimized = false;
+            break;
+        }
+        case SDL_EVENT_WINDOW_RESIZED:
+        {
+            WindowResizeEvent windowResizeEvent(event.window.data1, event.window.data2);
+            EventBus::Publish(windowResizeEvent);
+            break;
+        }
+        default:
+        {
+            break;
+        }
         }
     }
 }

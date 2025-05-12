@@ -16,7 +16,11 @@ public:
     void Shutdown();
 
 private:
+    void SubscribeOnEvents();
+
+private:
     bool m_IsRunning;
+    bool m_Minimized;
 
 };
 
