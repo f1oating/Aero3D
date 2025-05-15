@@ -10,7 +10,7 @@ namespace aero3d {
 class NativeVFile : public VFile
 {
 public:
-    NativeVFile(void* handle);
+    NativeVFile(void* handle, std::string& virtualPath);
     ~NativeVFile();
 
     virtual void ReadBytes(void* buffer, size_t size, size_t start = 0) override;
@@ -32,7 +32,7 @@ public:
 
 private:
     uint64_t m_Length;
-    std::string m_Name;
+    std::string m_VirtualPath;
     void* m_Handle;
     void* m_Data;
     bool m_Opened;

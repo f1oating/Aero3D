@@ -15,9 +15,10 @@ public:
     static bool Init();
     static void Shutdown();
 
-    static void Mount(std::string& path, std::string& mounPoint, DirType type = DirType::NATIVE);
+    static void Mount(std::string virtualPath, std::string mounPoint, 
+        DirType type = DirType::NATIVE, bool appendToFront = false);
 
-    static std::shared_ptr<VFile> ReadFile(std::string& virtualPath);
+    static std::shared_ptr<VFile> ReadFile(std::string path);
 
 private:
     static std::vector<std::unique_ptr<VFDirectory>> s_Dirs;

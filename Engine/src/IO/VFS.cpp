@@ -23,37 +23,42 @@ void VFS::Shutdown()
     LogMsg("VFS Shutdown.");
 }
 
-void VFS::Mount(std::string& path, std::string& mountPoint, DirType type)
+void VFS::Mount(std::string virtualPath, std::string mountPoint, DirType type, bool appendToFront)
 {
     switch (type)
     {
-    case DirType::NATIVE: s_Dirs.emplace_back(std::make_unique<NativeVFDirectory>(path, mountPoint)); break;
+    case DirType::NATIVE:
+    {
+        if (appendToFront)
+        {
+            s_Dirs.insert(s_Dirs.begin(), std::make_unique<NativeVFDirectory>(virtualPath, mountPoint));
+        }
+        else
+        {
+            s_Dirs.emplace_back(std::make_unique<NativeVFDirectory>(virtualPath, mountPoint));
+        }
+        break;
+    }
     default: Assert(ERROR_INFO, false, "Unknown DirType!");
     }
 }
 
-std::shared_ptr<VFile> VFS::ReadFile(std::string& virtualPath)
+std::shared_ptr<VFile> VFS::ReadFile(std::string path)
 {
     for (const auto& dir : s_Dirs)
     {
-        std::string mountPoint = dir->GetMountPoint();
-
-        if (virtualPath == mountPoint)
+        std::string dirVirtualPath = dir->GetVirualPath();
+        if (path.starts_with(dirVirtualPath))
         {
-            if (dir->FileExists(virtualPath))
+            std::string subPath = path.substr(dirVirtualPath.length());
+            if (dir->FileExists(subPath))
             {
-                return dir->OpenFile(virtualPath);
+                return dir->OpenFile(subPath);
             }
         }
     }
 
-    if (s_DefaultDir->FileExists(virtualPath))
-    {
-        return s_DefaultDir->OpenFile(virtualPath);
-    }
-
-    LogErr(ERROR_INFO, "File dont exist: %s", virtualPath);
-    return nullptr;
+    return s_DefaultDir->OpenFile(path);
 }
 
 } // namespace aero3d

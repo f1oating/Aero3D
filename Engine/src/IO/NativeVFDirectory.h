@@ -8,7 +8,7 @@ namespace aero3d {
 class NativeVFDirectory : public VFDirectory
 {
 public:
-    NativeVFDirectory(std::string path, std::string mountPoint);
+    NativeVFDirectory(std::string virtualPath, std::string mountPoint);
     ~NativeVFDirectory();
 
     virtual std::shared_ptr<VFile> OpenFile(std::string& path) override;

@@ -8,13 +8,13 @@
 #include "Utils/StringManip.h"
 #include "Utils/Log.h"
 
-#define A3D_RESOLVE_NATIVE_PATH(p) (m_Path + (p).substr(m_MountPoint.size()))
+#define A3D_RESOLVE_NATIVE_PATH(p) (m_MountPoint + p)
 
 namespace aero3d {
 
-NativeVFDirectory::NativeVFDirectory(std::string path, std::string mountPoint)
+NativeVFDirectory::NativeVFDirectory(std::string virtualPath, std::string mountPoint)
 {
-    m_Path = path;
+    m_VirtualPath = virtualPath;
     m_MountPoint = mountPoint;
 }
 
@@ -37,7 +37,7 @@ std::shared_ptr<VFile> NativeVFDirectory::OpenFile(std::string& path)
     if (!fileHandle || fileHandle == INVALID_HANDLE_VALUE)
         LogErr(ERROR_INFO, "Failed to open file: %s", path.c_str());
 
-    return std::make_shared<NativeVFile>(fileHandle);
+    return std::make_shared<NativeVFile>(fileHandle, path);
 }
 
 bool NativeVFDirectory::FileExists(std::string& path)

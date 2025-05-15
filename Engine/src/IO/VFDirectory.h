@@ -25,12 +25,12 @@ public:
 
     virtual bool FileExists(std::string& path) = 0;
 
-    const std::string& GetPath() const { return m_Path; }
     const std::string& GetMountPoint() const { return m_MountPoint; }
+    const std::string& GetVirualPath() const { return m_VirtualPath; }
 
 protected:
-    std::string m_Path;
     std::string m_MountPoint;
+    std::string m_VirtualPath;
 
 };
 
