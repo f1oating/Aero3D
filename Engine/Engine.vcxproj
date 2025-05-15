@@ -79,7 +79,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>A3D_PLATFORM_WINDOWS;A3D_BUILD_DLL;A3D_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;src\Vendor;..\Dependencies\SDL3\include;..\Dependencies\glad\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;src\Vendor;..\Dependencies\SDL3\include;..\Dependencies\glad\include;..\Dependencies\glm\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -101,7 +101,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>A3D_PLATFORM_WINDOWS;A3D_BUILD_DLL;A3D_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;src\Vendor;..\Dependencies\SDL3\include;..\Dependencies\glad\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;src\Vendor;..\Dependencies\SDL3\include;..\Dependencies\glad\include;..\Dependencies\glm\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -127,7 +127,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>A3D_PLATFORM_WINDOWS;A3D_BUILD_DLL;A3D_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;src\Vendor;..\Dependencies\SDL3\include;..\Dependencies\glad\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;src\Vendor;..\Dependencies\SDL3\include;..\Dependencies\glad\include;..\Dependencies\glm\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -150,7 +150,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Core\Application.h" />
+    <ClInclude Include="src\Core\Configuration.h" />
     <ClInclude Include="src\Core\Window.h" />
+    <ClInclude Include="src\Event\Events.h" />
+    <ClInclude Include="src\Event\EventBus.h" />
     <ClInclude Include="src\Graphics\Buffer.h" />
     <ClInclude Include="src\Graphics\ConstantBuffer.h" />
     <ClInclude Include="src\Graphics\GraphicsContext.h" />
@@ -177,7 +180,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp" />
+    <ClCompile Include="src\Core\Configuration.cpp" />
     <ClCompile Include="src\Core\Window.cpp" />
+    <ClCompile Include="src\Event\EventBus.cpp" />
     <ClCompile Include="src\Graphics\GraphicsContext.cpp" />
     <ClCompile Include="src\Graphics\RenderCommand.cpp" />
     <ClCompile Include="src\IO\VFS.cpp" />

@@ -12,10 +12,10 @@ namespace aero3d {
 class Window
 {
 public:
-    static bool Init(const char* title, int width, int height);
+    static bool Init(const char* title, int width, int height, const char* api);
     static void Shutdown();
 
-    static void PollEvents(bool& running);
+    static void PollEvents(bool& running, bool& minimized);
     static void SwapBuffers();
 
     static SDL_Window* GetSDLWindow();

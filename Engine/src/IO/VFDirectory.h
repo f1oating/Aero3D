@@ -21,16 +21,16 @@ class VFDirectory
 public:
     virtual ~VFDirectory() = default;
     
-    virtual std::shared_ptr<VFile> OpenFile(const char* path) = 0;
+    virtual std::shared_ptr<VFile> OpenFile(std::string& path) = 0;
 
-    virtual bool FileExists(const char* path) = 0;
+    virtual bool FileExists(std::string& path) = 0;
 
-    const char* GetPath() const { return m_Path; }
-    const char* GetMountPoint() const { return m_MountPoint; }
+    const std::string& GetMountPoint() const { return m_MountPoint; }
+    const std::string& GetVirualPath() const { return m_VirtualPath; }
 
 protected:
-    const char* m_Path;
-    const char* m_MountPoint;
+    std::string m_MountPoint;
+    std::string m_VirtualPath;
 
 };
 

@@ -10,19 +10,19 @@
 
 namespace aero3d {
 
-enum class API
-{
-    None,
-    OpenGL,
-    Vulkan,
-    DirectX11,
-    DirectX12
-};
-
 class RenderAPI
 {
 public:
-    RenderAPI() : m_API(API::None) {}
+    enum class API
+    {
+        None,
+        OpenGL,
+        Vulkan,
+        DirectX11,
+        DirectX12
+    };
+
+public:
     virtual ~RenderAPI() = default;
 
     virtual bool Init() = 0;
@@ -40,13 +40,10 @@ public:
     virtual std::shared_ptr<IndexBuffer> CreateIndexBuffer(const void* data, size_t size, size_t count) = 0;
     virtual std::shared_ptr<ConstantBuffer> CreateConstantBuffer(const void* data, size_t size) = 0;
 
-    virtual std::shared_ptr<Shader> CreateShader(const char* vertexPath, const char* pixelPath) = 0;
-    virtual std::shared_ptr<Texture> CreateTexture(const char* path) = 0;
+    virtual std::shared_ptr<Shader> CreateShader(std::string& vertexPath, std::string& pixelPath) = 0;
+    virtual std::shared_ptr<Texture> CreateTexture(std::string& path) = 0;
 
-    API GetAPI() { return m_API; }
-
-protected:
-    API m_API;
+    virtual RenderAPI::API GetAPI() = 0;
 
 };
 

@@ -4,6 +4,7 @@
 #include "Core/Window.h"
 #include "IO/VFS.h"
 #include "Graphics/RenderCommand.h"
+#include "Event/EventBus.h"
 
 #include "Graphics/Buffer.h"
 #include "Graphics/Shader.h"
@@ -13,7 +14,7 @@
 namespace aero3d {
 
 Application::Application()
-    : m_IsRunning(false)
+    : m_IsRunning(false), m_Minimized(false)
 {
 }
 
@@ -25,20 +26,28 @@ bool Application::Init()
 {
     LogMsg("Application Initialize.");
 
-    if (!Window::Init("Aero3D", 800, 600))
-    {
-        return false;
-    }
-
     if (!VFS::Init())
     {
         return false;
     }
 
-    if (!RenderCommand::Init())
+    if (!EventBus::Init())
     {
         return false;
     }
+
+    if (!Window::Init("Aero3D", 800,
+        600, "OpenGL"))
+    {
+        return false;
+    }
+
+    if (!RenderCommand::Init("OpenGL"))
+    {
+        return false;
+    }
+
+    SubscribeOnEvents();
 
     m_IsRunning = true;
 
@@ -88,19 +97,23 @@ void Application::Run()
 
     while (m_IsRunning)
     {
-        Window::PollEvents(m_IsRunning);
-        RenderCommand::Clear();
+        Window::PollEvents(m_IsRunning, m_Minimized);
 
-        shader->Bind();
-        cb->Bind(0);
+        if (!m_Minimized)
+        {
+            RenderCommand::Clear();
 
-        data.color[0] = static_cast<float>(rand()) / RAND_MAX;
-        data.color[1] = static_cast<float>(rand()) / RAND_MAX;
-        data.color[2] = static_cast<float>(rand()) / RAND_MAX;
+            shader->Bind();
+            cb->Bind(0);
 
-        cb->SetData(&data, sizeof(UniformData));
-        RenderCommand::DrawIndexed(vb, ib);
-        shader->Unbind();
+            data.color[0] = static_cast<float>(rand()) / RAND_MAX;
+            data.color[1] = static_cast<float>(rand()) / RAND_MAX;
+            data.color[2] = static_cast<float>(rand()) / RAND_MAX;
+
+            cb->SetData(&data, sizeof(UniformData));
+            RenderCommand::DrawIndexed(vb, ib);
+            shader->Unbind();
+        }
 
         Window::SwapBuffers();
     }
@@ -111,8 +124,21 @@ void Application::Shutdown()
     LogMsg("Application Shutdown.");
 
     RenderCommand::Shutdown();
-    VFS::Shutdown();
     Window::Shutdown();
+    EventBus::Shutdown();
+    VFS::Shutdown();
+}
+
+void Application::SubscribeOnEvents()
+{
+    EventBus::Subscribe(typeid(WindowResizeEvent), [&](Event& event) {
+        WindowResizeEvent& windowResizeEvent = static_cast<WindowResizeEvent&>(event);
+
+        int width = std::max(1, windowResizeEvent.GetWidth());
+        int height = std::max(1, windowResizeEvent.GetHeight());
+
+        RenderCommand::SetViewport(0, 0, width, height);
+    });
 }
 
 } // namespace aero3d

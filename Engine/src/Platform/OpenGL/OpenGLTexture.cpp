@@ -11,7 +11,7 @@
 
 namespace aero3d {
 
-OpenGLTexture::OpenGLTexture(const char* path)
+OpenGLTexture::OpenGLTexture(std::string& path)
 {
     glGenTextures(1, &m_TextureID);
     glBindTexture(GL_TEXTURE_2D, m_TextureID);
@@ -25,7 +25,8 @@ OpenGLTexture::OpenGLTexture(const char* path)
     file->Load();
 
     int width, height, nrChannels;
-    unsigned char* data = stbi_load_from_memory(static_cast<const stbi_uc*>(file->GetData()), file->GetLength(), &width, &height, &nrChannels, 0);
+    unsigned char* data = stbi_load_from_memory(static_cast<const stbi_uc*>(file->GetData()), 
+        static_cast<int>(file->GetLength()), &width, &height, &nrChannels, 0);
 
     if (data) {
         GLenum format = (nrChannels == 3) ? GL_RGB : GL_RGBA;
@@ -34,7 +35,7 @@ OpenGLTexture::OpenGLTexture(const char* path)
         glGenerateMipmap(GL_TEXTURE_2D);
     }
     else {
-        LogErr(ERROR_INFO, "Failed to load texture: %s", path);
+        LogErr(ERROR_INFO, "Failed to load texture: %s", path.c_str());
     }
 
     file->Unload();

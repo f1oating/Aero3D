@@ -1,70 +1,80 @@
 #include "Graphics/RenderCommand.h"
 
+#include <string.h>
+
+#include "Core/Configuration.h"
 #include "Platform/OpenGL/OpenGLRenderAPI.h"
 
 namespace aero3d {
 
-std::unique_ptr<RenderAPI> RenderCommand::m_API = nullptr;
+std::unique_ptr<RenderAPI> RenderCommand::s_API = nullptr;
 
-bool RenderCommand::Init()
+bool RenderCommand::Init(const char* api)
 {
-    m_API = std::make_unique<OpenGLRenderAPI>();
-    return m_API->Init();
+    if (strcmp(api, "OpenGL") == 0) s_API = std::make_unique<OpenGLRenderAPI>();
+    else Assert(ERROR_INFO, false, "This Rendering API not yet supported.");
+
+    return s_API->Init();
 }
 
 void RenderCommand::Shutdown()
 {
-    m_API->Shutdown();
+    s_API->Shutdown();
 }
 
 void RenderCommand::SetViewport(int x, int y, int width, int height)
 {
-    m_API->SetViewport(x, y, width, height);
+    s_API->SetViewport(x, y, width, height);
 }
 
 void RenderCommand::SetClearColor(float r, float g, float b, float a)
 {
-    m_API->SetClearColor(r, g, b, a);
+    s_API->SetClearColor(r, g, b, a);
 }
 
 void RenderCommand::Clear()
 {
-    m_API->Clear();
+    s_API->Clear();
 }
 
 void RenderCommand::Draw(std::shared_ptr<VertexBuffer> vb, size_t count)
 {
-    m_API->Draw(vb, count);
+    s_API->Draw(vb, count);
 }
 
 void RenderCommand::DrawIndexed(std::shared_ptr<VertexBuffer> vb, std::shared_ptr<IndexBuffer> ib)
 {
-    m_API->DrawIndexed(vb, ib);
+    s_API->DrawIndexed(vb, ib);
 }
 
 std::shared_ptr<VertexBuffer> RenderCommand::CreateVertexBuffer(BufferLayout& layout, const void* data, size_t size)
 {
-    return m_API->CreateVertexBuffer(layout, data, size);
+    return s_API->CreateVertexBuffer(layout, data, size);
 }
 
 std::shared_ptr<IndexBuffer> RenderCommand::CreateIndexBuffer(const void* data, size_t size, size_t count)
 {
-    return m_API->CreateIndexBuffer(data, size, count);
+    return s_API->CreateIndexBuffer(data, size, count);
 }
 
 std::shared_ptr<ConstantBuffer> RenderCommand::CreateConstantBuffer(const void* data, size_t size)
 {
-    return m_API->CreateConstantBuffer(data, size);
+    return s_API->CreateConstantBuffer(data, size);
 }
 
-std::shared_ptr<Shader> RenderCommand::CreateShader(const char* vertexPath, const char* pixelPath)
+std::shared_ptr<Shader> RenderCommand::CreateShader(std::string vertexPath, std::string pixelPath)
 {
-    return m_API->CreateShader(vertexPath, pixelPath);
+    return s_API->CreateShader(vertexPath, pixelPath);
 }
 
-std::shared_ptr<Texture> RenderCommand::CreateTexture(const char* path)
+std::shared_ptr<Texture> RenderCommand::CreateTexture(std::string path)
 {
-    return m_API->CreateTexture(path);
+    return s_API->CreateTexture(path);
+}
+
+RenderAPI::API RenderCommand::GetAPI()
+{
+    return s_API->GetAPI();
 }
 
 } // namespace aero3d

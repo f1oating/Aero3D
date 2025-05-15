@@ -10,25 +10,32 @@ namespace aero3d {
 class NativeVFile : public VFile
 {
 public:
-    NativeVFile(void* handle);
+    NativeVFile(void* handle, std::string& virtualPath);
     ~NativeVFile();
 
     virtual void ReadBytes(void* buffer, size_t size, size_t start = 0) override;
     virtual std::string ReadString() override;
 
+    virtual void Truncate(size_t pos = 0) override;
+    virtual void WriteBytes(void* data, size_t size, size_t start = 0) override;
+
     virtual void Load() override;
     virtual void Unload() override;
+
+    virtual bool IsWritable() override;
+    virtual bool IsOpened() override;
 
     virtual void* GetData() override;
 
     virtual uint64_t GetLength() const override;
-    virtual const char* GetName() const override;
+    virtual const std::string& GetName() const override;
 
 private:
     uint64_t m_Length;
-    const char* m_Name;
+    std::string m_VirtualPath;
     void* m_Handle;
     void* m_Data;
+    bool m_Opened;
 
 };
 

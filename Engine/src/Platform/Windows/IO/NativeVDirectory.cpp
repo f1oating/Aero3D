@@ -8,11 +8,13 @@
 #include "Utils/StringManip.h"
 #include "Utils/Log.h"
 
+#define A3D_RESOLVE_NATIVE_PATH(p) (m_MountPoint + p)
+
 namespace aero3d {
 
-NativeVFDirectory::NativeVFDirectory(const char* path, const char* mountPoint)
+NativeVFDirectory::NativeVFDirectory(std::string virtualPath, std::string mountPoint)
 {
-    m_Path = path;
+    m_VirtualPath = virtualPath;
     m_MountPoint = mountPoint;
 }
 
@@ -20,14 +22,11 @@ NativeVFDirectory::~NativeVFDirectory()
 {
 }
 
-std::shared_ptr<VFile> NativeVFDirectory::OpenFile(const char* path)
+std::shared_ptr<VFile> NativeVFDirectory::OpenFile(std::string& path)
 {
-    const char* fileRelativePath = path + strlen(m_MountPoint);
-    std::string filePath = ConcatStrings(m_Path, fileRelativePath);
-
     HANDLE fileHandle = CreateFileA(
-        filePath.c_str(),
-        GENERIC_READ,
+        A3D_RESOLVE_NATIVE_PATH(path).c_str(),
+        GENERIC_READ | GENERIC_WRITE,
         FILE_SHARE_READ,
         nullptr,
         OPEN_EXISTING,
@@ -35,18 +34,15 @@ std::shared_ptr<VFile> NativeVFDirectory::OpenFile(const char* path)
         nullptr
     );
 
-    if (fileHandle == INVALID_HANDLE_VALUE)
-    {
-        LogErr(ERROR_INFO, "Failed to open file: %s", path);
-        return nullptr;
-    }
+    if (!fileHandle || fileHandle == INVALID_HANDLE_VALUE)
+        LogErr(ERROR_INFO, "Failed to open file: %s", path.c_str());
 
-    return std::make_shared<NativeVFile>(fileHandle);
+    return std::make_shared<NativeVFile>(fileHandle, path);
 }
 
-bool NativeVFDirectory::FileExists(const char* path)
+bool NativeVFDirectory::FileExists(std::string& path)
 {
-    DWORD attrs = GetFileAttributesA(path);
+    DWORD attrs = GetFileAttributesA(A3D_RESOLVE_NATIVE_PATH(path).c_str());
     return (attrs != INVALID_FILE_ATTRIBUTES) && !(attrs & FILE_ATTRIBUTE_DIRECTORY);
 }
 

@@ -14,7 +14,7 @@ namespace aero3d {
 class RenderCommand
 {
 public:
-    static bool Init();
+    static bool Init(const char* api);
     static void Shutdown();
 
     static void SetViewport(int x, int y, int width, int height);
@@ -29,11 +29,13 @@ public:
     static std::shared_ptr<IndexBuffer> CreateIndexBuffer(const void* data, size_t size, size_t count);
     static std::shared_ptr<ConstantBuffer> CreateConstantBuffer(const void* data, size_t size);
 
-    static std::shared_ptr<Shader> CreateShader(const char* vertexPath, const char* pixelPath);
-    static std::shared_ptr<Texture> CreateTexture(const char* path);
+    static std::shared_ptr<Shader> CreateShader(std::string vertexPath, std::string pixelPath);
+    static std::shared_ptr<Texture> CreateTexture(std::string path);
+
+    static RenderAPI::API GetAPI();
 
 private:
-    static std::unique_ptr<RenderAPI> m_API;
+    static std::unique_ptr<RenderAPI> s_API;
 
 };
 

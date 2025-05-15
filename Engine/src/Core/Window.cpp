@@ -3,13 +3,14 @@
 #include <memory>
 
 #include "Utils/Log.h"
+#include "Event/EventBus.h"
 
 namespace aero3d {
 
 SDL_Window* Window::s_Window = nullptr;
 std::unique_ptr<GraphicsContext> Window::s_Context = nullptr;
 
-bool Window::Init(const char* title, int width, int height)
+bool Window::Init(const char* title, int width, int height, const char* api)
 {
     LogMsg("Window Initialize.");
 
@@ -33,7 +34,7 @@ bool Window::Init(const char* title, int width, int height)
         return false;
     }
 
-    s_Context = GraphicsContext::Create();
+    s_Context = GraphicsContext::Create(api);
     if (!s_Context->Init(s_Window))
     {
         return false;
@@ -55,12 +56,36 @@ void Window::Shutdown()
     SDL_QuitSubSystem(SDL_INIT_VIDEO);
 }
 
-void Window::PollEvents(bool& running)
+void Window::PollEvents(bool& running, bool& minimized)
 {
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
-        if (event.type == SDL_EVENT_QUIT) {
+        switch (event.type) {
+        case SDL_EVENT_QUIT:
+        {
             running = false;
+            break;
+        }
+        case SDL_EVENT_WINDOW_MINIMIZED:
+        {
+            minimized = true;
+            break;
+        }
+        case SDL_EVENT_WINDOW_RESTORED:
+        {
+            minimized = false;
+            break;
+        }
+        case SDL_EVENT_WINDOW_RESIZED:
+        {
+            WindowResizeEvent windowResizeEvent(event.window.data1, event.window.data2);
+            EventBus::Publish(windowResizeEvent);
+            break;
+        }
+        default:
+        {
+            break;
+        }
         }
     }
 }

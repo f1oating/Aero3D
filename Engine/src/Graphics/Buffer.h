@@ -31,7 +31,7 @@ static int ElementTypeSize(ElementType type)
     case ElementType::MAT2: return 16;
     case ElementType::MAT3: return 36;
     case ElementType::MAT4: return 64;
-    default: Assert("This ElementType doesnt exist !", false);
+    default: Assert(ERROR_INFO, false, "This ElementType doesnt exist !"); return 0;
     }
 }
 
@@ -61,7 +61,7 @@ struct LayoutElement
         case ElementType::MAT2: return 4;
         case ElementType::MAT3: return 9;
         case ElementType::MAT4: return 16;
-        default: Assert("This ElementType doesnt exist !", false);
+        default: Assert(ERROR_INFO, false, "This ElementType doesnt exist !");
         }
         return 0;
     }
